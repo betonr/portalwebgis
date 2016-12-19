@@ -1,5 +1,5 @@
 	view = new ol.View({
-		center: [-5233558.191812292, -2632067.6072519226],
+		center: [-5432905.961580031, -2530559.233689207],
 		zoom: 7,
 		maxZoom: 22,
 		minZoom: 2
@@ -72,7 +72,7 @@
 	// ===========================
 	//configurações de mostragem do mapa
 	var map = new ol.Map({
-		target: 'mapa',
+		target: 'mapafixo',
 		controls: ol.control.defaults().extend([
 			new ol.control.ScaleLine(),
 			new ol.control.ZoomSlider()

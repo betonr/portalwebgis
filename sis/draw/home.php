@@ -5,7 +5,7 @@ if (empty($DashboardLogin) || empty($Admin) || $Admin['level'] < $AdminLevel):
 endif;
 ?>
 
-<section class="create_content">
+<section class="draw_content">
     <div class="content">
         <h1>Draw Maps</h1>
 
@@ -24,14 +24,11 @@ endif;
             }
 
         echo"
-            <article class='create_maps box box4'>
-                <img src='images/icons/map3.png' title='' alt='' />
-                <h1>{$title} <span style='font-size:0.7em; {$statusStyle}'>( {$status} )</span></h1>
-                <p>{$description}</p>
-                <center>
-                    <a href='dashboard.php?p=draw/edit&id={$id}' class='btn btn_edit'>DRAW</a>
-                </center>
-            </article>
+            <article class='draw_maps'><center>
+                <div class='view'><p>{$title} <span style='font-size:0.7em; {$statusStyle}'>( {$status} )</span></p></div>
+                <div class='view t50'><p>{$description}</p></div>
+                <div class='view'><p><center><a href='dashboard.php?p=draw/edit&id={$id}'>&#10000; DRAW</a></center></p></div>
+            </center></article>
          ";
 
             endforeach;

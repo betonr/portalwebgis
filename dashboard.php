@@ -48,12 +48,20 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         <link rel="base" href="<?= BASE; ?>">
 
         <link rel="stylesheet" href="css/reset.css"/>
+        <link rel="stylesheet" href="css/ol.css"/>
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="css/fonticon.css"/>
 
         <script src="js/jquery.js"></script>
         <script src="js/jquery.form.js"></script>
         <script src="js/main.js"></script>
+
+        <script src="js/ol3/ol-debug.js" defer></script>
+        <script src="js/map.js" defer></script>
+
+        <script src="js/draw/points.js" defer></script>
+        <script src="js/draw/line.js" defer></script>
+        <script src="js/draw/poligons.js" defer></script>
 
     </head>
     <body>
