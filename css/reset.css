@@ -1,0 +1,150 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+object,
+embed,
+video,
+iframe,
+iframe['style']{
+    max-width: 100%;
+    height: auto;
+}
+
+img{
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+a img {
+    border: none;
+}
+
+.clear{
+    clear: both;
+}
+
+.form_load{
+    width: 25px;
+    margin-top: -2px;
+}
+
+.btn{
+    display: inline-block;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.btn:hover{
+    text-decoration: none;
+}
+
+.box{
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+}
+
+.box:before{
+    clear: both;
+}
+
+.box1{width: 100%; margin: 15px 0 15px 0;}
+.box2{width: 49%; margin: 1% 1% 1% 0;}
+.box2:nth-of-type(2n+0){margin-right: 0;}
+.box3{width: 32%; margin: 1% 1% 1% 0;}
+.box3:nth-of-type(3n+0){margin-right: 0;}
+.box4{width: 23.5%; margin: 1% 1% 1% 0;}
+.box4:nth-of-type(4n+0){margin-right: 0;}
+.box5{width: 18.4%; margin: 1% 1% 1% 0;}
+.box5:nth-of-type(5n+0){margin-right: 0;}
+
+/*
+TRIGGER
+Personaliza mensagens do sistema
+*/
+.trigger{
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background: #888;
+    font-size: 0.9em;
+    color: #fff;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.trigger p{
+    margin-top: 8px;
+}
+
+.trigger_success{
+    background-color: #DFF0D7;
+    border-color: #2A552A;
+    color: #2A552A;
+}
+
+.trigger_info{
+    background-color: #D8EDF8;
+    border-color: #22526A;
+    color: #22526A;
+}
+
+.trigger_alert{
+    background-color: #FCF8E2;
+    border-color: #675129;
+    color: #675129;
+}
+
+.trigger_error{
+    background-color: #F2DEDE;
+    border-color: #853432;
+    color: #853432;
+}
+
+
+@media (max-width: 30em){
+    .box2,
+    .box3,
+    .box4,
+    .box5{width: 100%; margin: 15px 0 15px 0 !important;}
+}
+
+@media (min-width: 30em) and (max-width: 48em){
+    .box2,
+    .box3,
+    .box4,
+    .box5{width: 49%; margin: 1% 2% 1% 0 !important;}
+    .box2:nth-of-type(2n+0),
+    .box3:nth-of-type(2n+0),
+    .box4:nth-of-type(2n+0),
+    .box5:nth-of-type(2n+0){margin-right: 0 !important;}
+}
+
+@media (min-width: 48em) and (max-width: 64em){
+    .box3,
+    .box4,
+    .box5{width: 32%; margin: 1% 2% 1% 0 !important;}
+    .box3:nth-of-type(3n+0),
+    .box4:nth-of-type(3n+0),
+    .box5:nth-of-type(3n+0){margin-right: 0 !important;}
+}
+
+@media (min-width: 64em) and (max-width: 80em){
+    .box4,
+    .box5{width: 22.75%; margin: 1% 2% 1% 0 !important;}
+    .box4:nth-of-type(4n+0),
+    .box5:nth-of-type(4n+0){margin-right: 0 !important;}
+}

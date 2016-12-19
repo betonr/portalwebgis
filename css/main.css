@@ -1,0 +1,185 @@
+.content {
+    width: 80%;
+    margin: 0 10%;
+}
+/* ===== HEADER ====== */
+header{
+    width: 100%;
+    border-bottom:  3px double #999;
+    padding: 25px;
+}
+header .logo{
+    width: 15%;
+    margin: 0 0 0 10%;
+    float: left;
+}
+header .logo img{
+    width: 100%;
+}
+
+header .banner{
+    width: auto;
+    float: right;
+    margin: 0 10% 0 0;
+}
+header .banner p{
+    text-align: right;
+    margin: 15px 15px 0 0;
+    float: left;
+}
+header .banner .btn{
+    float: left;
+    margin-top: 12px;
+    background: #ccc;
+    text-shadow: none;
+    font-weight: 600;
+    color: #fff;
+}
+header .banner .btn:hover{
+    background: #999;
+}
+
+/* ===== FOOTER ====== */
+footer{
+    width:100%;
+    border-top:  3px double #ccc;
+    padding: 15px 0;
+}
+footer p{
+    text-align: center;
+    color: #333;
+    text-shadow: 1px 1px 1px #999;
+}
+
+/* ===== HOME ======= */
+.home {
+    padding: 60px 0;
+}
+.home .box{
+    padding: 25px;
+    background: #efefef;
+    border: 1px solid #666;
+    border-radius: 15px;
+}
+.home .box img{
+    width:60%;
+    margin: 0 20% 15px 20%;
+}
+.home .box a{
+     text-shadow: 1px 1px 1px #ccc;
+     font-weight: 600;
+     font-size: 1.2em;
+     text-decoration: none;
+}
+.home .box a:hover{ color: #333 !important; }
+.home .box a.green{ color: green; }
+.home .box a.blue{ color: blue;}
+.home .box a.red{ color: red;}
+
+/* ===== CREATE ===== */
+nav{
+    width: 100%;
+    padding: 10px 10%;
+    background: #ccc;
+    border-bottom: 3px double #999;
+}
+nav ul li{
+    list-style: none;
+    display: inline-block;
+    width: 49.5%;
+    text-align: center;
+}
+nav ul li a{
+    width: 100%;
+    text-decoration: none;
+    font-weight: 600;
+    color: #FFF;
+    text-shadow: 1px 1px 1px #999;
+    font-size: 1.3em;
+}
+nav ul li a:hover{ color: #333; }
+
+/* --- create --- */
+.create_content{
+    width: 100%;
+    padding: 40px 0;
+}
+.create_content h1{
+    color: green;
+    font-weight: 600;
+    font-size: 1.8em;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 8px 20px;
+}
+.create_content form{
+    width: 90%;
+    margin: 20px 5%;
+}
+.create_content label{
+    width: 100%;
+    display: block;
+    padding: 10px 0;
+}
+.create_content .legend{
+    width: 100%;
+    padding: 5px 8px;
+    color: #2F4F4F;
+    font-size: 1.3em;
+    display: block;
+}
+.create_content .legend i{
+    font-size: 0.85em;
+}
+.create_content form input{
+    width: 100%;
+    font-size: 1.1em;
+    padding: 5px 10px;
+}
+.create_content form select{
+    width: 100%;
+    font-size: 1.1em;
+    background: #fff;
+    padding: 5px;
+}
+.create_content form .btn{
+    font-size: 1.3em;
+    color: #fff;
+    background: #29a329;
+    float: right;
+}
+.create_content form .btn:hover{
+    background: #1f7a1f;
+}
+
+.create_maps{
+    background: rgba(0,0,0,0.05);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.create_maps h1{
+    display: block;
+    padding: 0;
+    font-size: 1.25em;
+    text-align: center;
+    text-shadow: 1px 1px 1px #999;
+    color: #000;
+}
+.create_maps p{
+    display: block;
+    margin: 10px 0;
+}
+.create_maps .btn{
+    font-weight: 600;
+    margin: 8px 0;
+    color: #fff;
+}
+.create_maps .btn:hover{
+    background: #666 !important;
+}
+.create_maps .btn.btn_edit{
+    background: rgba(0, 0, 255, 0.6);
+}
+.create_maps .btn.btn_del{
+    background: rgba(255, 0, 0, 0.6);
+}

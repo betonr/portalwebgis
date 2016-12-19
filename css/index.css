@@ -1,0 +1,62 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.login {
+    width: 40%;
+    margin: 7% 30% 0 30%;
+    background: rgba(0,0,0,0.1);
+    padding: 25px 0;
+    border: 2px solid #bbb;
+    box-shadow: 0px 0px 20px #999;
+}
+
+.login .logo{
+    width: 40%;
+    margin: 20px 30%;
+}
+
+.login form{
+    width: 80%;
+    margin: 0 10%;
+}
+
+.login form .label{
+    display: block;
+}
+
+.login form .label .legend{
+    display: block;
+    font-weight: 500;
+    font-size: 1.2em;
+    padding: 15px 0 0 0;
+}
+
+.login form .label input{
+    width: 100%;
+    display: block;
+    padding: 7px 7px 7px 34px;
+    font-size: 1.1em;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+}
+.login form .label input.user{
+       background: url(../images/icons/user.png) no-repeat;
+       background-color: #fff;
+}
+.login form .label input.pass{
+       background: url(../images/icons/pass.png) no-repeat;
+       background-color: #fff;
+}
+
+.login form .btn{
+    font-size: 1.2em;
+    color: #fff;
+    background: #29a329;
+    display: block;
+    margin: 15px auto;
+}
+.login form .btn:hover{
+    background: #1f7a1f;
+}

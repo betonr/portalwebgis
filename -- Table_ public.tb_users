@@ -1,0 +1,47 @@
+-- Table: public.tb_users
+
+-- DROP TABLE public.tb_users;
+
+CREATE TABLE public.tb_users
+(
+  id integer NOT NULL DEFAULT nextval('tb_users_id_seq'::regclass),
+  name character varying(50) NOT NULL,
+  email character varying(50) NOT NULL,
+  phone character varying(50),
+  institution character varying(50) NOT NULL,
+  password character varying NOT NULL,
+  level integer NOT NULL,
+  datestart date NOT NULL,
+  status integer NOT NULL,
+  rep_id character varying(50),
+  CONSTRAINT tb_users_pkey PRIMARY KEY (id),
+  CONSTRAINT tb_users_email_key UNIQUE (email)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.tb_users
+  OWNER TO postgres;
+
+-------------------------------------------------
+-- DROP TABLE public.tb_maps;
+
+CREATE TABLE public.tb_maps
+(
+  id integer NOT NULL DEFAULT nextval('tb_maps_id_seq'::regclass),
+  title character varying(30) NOT NULL,
+  name character varying(30) NOT NULL,
+  description character varying NOT NULL,
+  type character varying(20) NOT NULL,
+  atribs character varying NOT NULL,
+  rep_id character varying(50) NOT NULL,
+  datestart date NOT NULL,
+  status integer NOT NULL,
+  CONSTRAINT tb_maps_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.tb_maps
+  OWNER TO postgres;
+
