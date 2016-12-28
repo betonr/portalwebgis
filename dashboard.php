@@ -56,13 +56,6 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         <script src="js/jquery.form.js"></script>
         <script src="js/main.js"></script>
 
-        <script src="js/ol3/ol-debug.js" defer></script>
-        <script src="js/map.js" defer></script>
-
-        <script src="js/draw/points.js" defer></script>
-        <script src="js/draw/line.js" defer></script>
-        <script src="js/draw/poligons.js" defer></script>
-
     </head>
     <body>
         <header>
@@ -91,7 +84,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
              endif;
         //FIM QUERY STRING
         ?>
-
+        <center><a href="dashboard.php?p=home" title="home pauliceia" class="btnback icon-office">Voltar ao Menu Principal</a></center>
         <footer>
             <div class="content">
                 <p>2016 - Pauliceia 2.0</p>

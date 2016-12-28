@@ -43,6 +43,9 @@
     ClearInteractionLine();
     $(this).addClass('activeOptions');
     map.addInteraction(drawLine);
+    $('.inserirDado').fadeIn();
+    $('.editDado').fadeOut();
+    $('.delDado').fadeOut();
 
     drawLine.on('drawend', function(e) {
         generationWktLine(e);
@@ -57,6 +60,14 @@
 
     selectLine.getFeatures().on('add', function(e) {
         var features = e.element;
+            $('.inserirDado').fadeOut();
+            $('.editDado').fadeIn();
+            $('.delDado').fadeOut();
+
+            var jsontext = $('#jsonMap').text();
+            window.alert(jsontext);
+            //$('.editDado input[name="id"').val(features.get('id'));
+            //$('.editDado input[name="nome"').val(features.get('nome'));
         features.on('change', function(e) {
             generationWktLine();
         });
@@ -72,21 +83,41 @@ $('#eraseLine').click(function(){
 
     eraseLine.getFeatures().on('change:length', function(e) {
         if(e.target.getArray().length !== 0){
-            layerLine.getSource().removeFeature(e.target.item(0));
-            generationWktLine();
-        }
-     });
+            eraseLine.getFeatures().on('add', function(f) {
+                var features = f.element;
 
+                var Prevent = $(this);
+                var DelId = features.get('id');
+                var tabName = features.get('tabName');
+                var Callback = 'Draw';
+                var Callback_action = 'draw_delete';
+                $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
+
+                    if (data.trigger) {
+                        if (bases instanceof ol.layer.Group){
+                            bases.getLayers().forEach(function(sublayer){
+                                if (sublayer.get('name') == 'mapAtual') {
+                                    sublayer.getSource().removeFeature(e.target.item(0));
+                                }
+                            });
+                        }
+                    }
+                    }, 'json');
+                });
+            }
+
+     });
     return false;
  });
 
  $('#panLine').click(function(){
     ClearInteractionLine();
     $(this).addClass('activeOptions');
+
     return false;
  });
 
- map.addLayer(layerLine);
+map.addLayer(layerLine);
 
  function ClearInteractionLine(){
         $("#lineOptions").find("p").removeClass('activeOptions');
@@ -110,5 +141,6 @@ function generationWktLine(){
         unionFeature.push(featureWkt);
     });
 
-    layerLine.getSource().getFeatures().length ? $('#wkt').text('MULTILINESTRING( ' + unionFeature + ' )') : $('#wkt').text('');
+    layerLine.getSource().getFeatures().length ? $(".draw_form input[name='geom']").val('MULTILINESTRING( ' + unionFeature + ' )') : $(".draw_form input[name='geom']").val('');
 }
+

@@ -16,7 +16,7 @@ endif;
             </article>
             <article class="box box3">
                 <img src="images/icons/Maps1.png" alt="[maps create]" title="maps create"/>
-                <center><a href="" title="criar mapas pauliceia" class="blue icon-laptop">Publicar Mapas</a></center>
+                <center><a href="dashboard.php?p=publish/home" title="criar mapas pauliceia" class="blue icon-laptop">Publicar Mapas</a></center>
             </article>
             <article class="box box3">
                 <img src="images/icons/maps2.png" alt="[maps create]" title="maps create"/>

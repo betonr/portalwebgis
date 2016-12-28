@@ -43,7 +43,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
                         $sql = "CREATE TABLE public.{$PostData['name']} (
                             id serial NOT NULL UNIQUE PRIMARY KEY,
-                            geom geometry({$PostData['type']},4326)
+                            geom geometry({$PostData['type']},4326),
+                            rep_id integer NOT NULL,
+                            datemod date NOT NULL,
+                            camadas character varying
                         )";
                         $result = pg_query($conn->getConn(), $sql);
 
@@ -120,7 +123,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             for($i=0; $i<(count($newAtribs)); $i++){
                                 //$atributo = Modify::Name($atribs[$i]);
                                 $atributo = $newAtribs[$i];
-                                if($atributo != 'geom' && $atributo != 'id'){
+                                if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
                                     if($verifyAtribs === false){
                                         $sql = "ALTER TABLE public.{$PostData['name']} ADD {$atributo} character varying";
@@ -148,7 +151,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             for($i=0; $i<(count($newAtribs)); $i++){
                                 //$atributo = Modify::Name($atribs[$i]);
                                 $atributo = $newAtribs[$i];
-                                if($atributo != 'geom' && $atributo != 'id'){
+                                if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
                                     if($verifyAtribs !== false){
                                         $sql = "ALTER TABLE public.{$PostData['name']} DROP COLUMN {$atributo}";
@@ -170,6 +173,30 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
             }
+            break;
+
+        case 'create_delete':
+                if($conn->getConn()){
+                    $sql = "SELECT * FROM tb_maps WHERE id={$PostData['del_id']} AND rep_id='{$PostData['rep_id']}'";
+                    $result = pg_query($conn->getConn(), $sql);
+                    if(pg_num_rows($result) <= 0){
+                        $jSON['trigger'] = AjaxErro('Error, map not exists!', E_USER_ERROR);
+                    }else{
+                        $statusMap = pg_fetch_all($result)[0];
+
+                        if($statusMap['status'] == 0){
+                            $sql="DELETE FROM tb_maps WHERE id={$PostData['del_id']}";
+                            $result = pg_query($conn->getConn(), $sql);
+                            $sql="DROP TABLE {$statusMap['name']}";
+                            $result = pg_query($conn->getConn(), $sql);
+                            $jSON['redirect'] = 'dashboard.php?p=create/edit';
+                        }else{
+                            $jSON['trigger'] = AjaxErro('Map not deleted, Disable geoserver!', E_USER_ERROR);
+                        }
+                    }
+                }else{
+                    $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+                }
             break;
     endswitch;
 

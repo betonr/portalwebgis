@@ -43,6 +43,11 @@
 		name: 'stamen'
 	});
 
+	var geojsonObject = $('#jsonMap').text();
+	var vectorSourceAtual = new ol.source.Vector({
+	        features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)
+	});
+
 	//layers do geoserver
 	var bases = new ol.layer.Group({
 		layers: [
@@ -63,6 +68,20 @@
 				}),
 				visible: true,
 				name: 'distritos'
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.TileWMS({
+					url: 'http://localhost:8080/geoserver/ows',
+					params: {'LAYERS': 'pauliceia: none', 'TILED': true},
+					serverType: 'geoserver'
+				}),
+				visible: false,
+				name: 'postgis'
+			}),
+			new ol.layer.Vector({
+				source: vectorSourceAtual,
+				visible: true,
+				name: 'mapAtual'
 			})
 		],
 		visible: true,
@@ -84,7 +103,7 @@
 
 	// ===========================
 	//ações de mostragem dos mapas fixos
-	$('#layers input[type=radio]').change(function() {
+	$('.top input[type=radio]').change(function() {
 		var layer = $(this).val();
 
 		map.getLayers().getArray().forEach(function(e) {
@@ -93,13 +112,13 @@
 				if(!e.get('visible')){
 					e.setVisible(true);
 				}
-			}else if(name != 'bases'){
+			}else if(name != 'bases' && name != 'lines' && name != 'Poligon' && name != 'points'){
 				e.setVisible(false);
 			}
 		});
 	});
 	//ações de mostragem dos mapas do geoserver
-	$('#layers input[type=checkbox]').click(function() {
+	$('.top input[type=checkbox]').click(function() {
 		var layerselect = $(this).val();
 
 		if (bases instanceof ol.layer.Group){
@@ -109,6 +128,26 @@
 						sublayer.setVisible(true);
 					}else{
 						sublayer.setVisible(false);
+					}
+				}
+			});
+		}
+
+	});
+
+	//ações de mostragem dos mapas do geoserver
+	$('.top .selectMap').click(function() {
+		var postgisSelect = $("select[name='dbpostgis']").val();
+		var postgislayer = 'pauliceia:'+postgisSelect+'';
+
+		if (bases instanceof ol.layer.Group){
+			bases.getLayers().forEach(function(sublayer){
+				if (sublayer.get('name') == 'postgis') {
+					if(postgisSelect == 'none'){
+						sublayer.setVisible(false);
+					}else{
+						sublayer.getSource().updateParams({'LAYERS': postgislayer, 'TILED': true});
+						sublayer.setVisible(true);
 					}
 				}
 			});

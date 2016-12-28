@@ -46,6 +46,9 @@ $('.poligons').click(function() {
 
     drawPoligons.on('drawend', function(e) {
         generationWktPoligons(e);
+        $('.inserirDado').fadeIn();
+        $('.editDado').fadeOut();
+        $('.delDado').fadeOut();
     });
  });
 
@@ -57,6 +60,9 @@ $('.poligons').click(function() {
 
     selectPoligons.getFeatures().on('add', function(e) {
         var features = e.element;
+        $('.inserirDado').fadeOut();
+        $('.editDado').fadeIn();
+        $('.delDado').fadeOut();
         features.on('change', function(e) {
             generationWktPoligons();
         });
@@ -72,9 +78,29 @@ $('#erasePoligons').click(function(){
 
     erasePoligons.getFeatures().on('change:length', function(e) {
         if(e.target.getArray().length !== 0){
-            layerPoligons.getSource().removeFeature(e.target.item(0));
-            generationWktPoligons();
-        }
+            erasePoligons.getFeatures().on('add', function(f) {
+                var features = f.element;
+
+                var Prevent = $(this);
+                var DelId = features.get('id');
+                var tabName = features.get('tabName');
+                var Callback = 'Draw';
+                var Callback_action = 'draw_delete';
+                $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
+
+                    if (data.trigger) {
+                        if (bases instanceof ol.layer.Group){
+                            bases.getLayers().forEach(function(sublayer){
+                                if (sublayer.get('name') == 'mapAtual') {
+                                    sublayer.getSource().removeFeature(e.target.item(0));
+                                }
+                            });
+                        }
+                    }
+                    }, 'json');
+                });
+            }
+
      });
 
     return false;
@@ -110,5 +136,5 @@ function generationWktPoligons(){
         unionFeature.push(featureWkt);
     });
 
-    layerPoligons.getSource().getFeatures().length ? $('#wkt').text('MULTIPOLYGON( ' + unionFeature + ' )') : $('#wkt').text('');
+    layerPoligons.getSource().getFeatures().length ? $(".draw_form input[name='geom']").val('MULTIPOLYGON( ' + unionFeature + ' )') : $(".draw_form input[name='geom']").val('');
 }

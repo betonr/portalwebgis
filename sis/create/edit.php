@@ -37,7 +37,8 @@ endif;
                 <p>{$description}</p>
                 <center>
                     <a href='dashboard.php?p=create/editForm&id={$id}' class='btn btn_edit'>EDIT</a>
-                    <a href='' class='btn btn_del'>DELETE</a>
+                    <span rel='map' class='btn btn_del j_delete_action icon-cancel-circle' id='{$id}'>DELETE</span>
+                    <span rel='map' rep='{$Admin['id']}' callback='Create' callback_action='create_delete' class='btn btn_del j_delete_action_confirm icon-warning' style='display:none; background: #cccc00' id='{$id}'>CONFIRMAR</span>
                 </center>
             </article>
          ";

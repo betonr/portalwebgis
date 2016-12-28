@@ -2,7 +2,18 @@
     width: 80%;
     margin: 0 10%;
 }
-/* ===== HEADER ====== */
+.btnback{
+    padding: 8px 18px;
+    border-radius: 15px;
+    display: inline-block;
+    margin: 0 auto 15px auto;
+    text-decoration:none;
+    color: #545454;
+}
+.btnback:hover{
+    color: #000;
+}
+/* ========== HEADER ========== */
 header{
     width: 100%;
     border-bottom:  3px double #999;
@@ -39,7 +50,7 @@ header .banner .btn:hover{
     background: #999;
 }
 
-/* ===== FOOTER ====== */
+/* ========= FOOTER ========== */
 footer{
     width:100%;
     border-top:  3px double #ccc;
@@ -51,7 +62,7 @@ footer p{
     text-shadow: 1px 1px 1px #999;
 }
 
-/* ===== HOME ======= */
+/* ========== HOME ========== */
 .home {
     padding: 60px 0;
 }
@@ -76,7 +87,7 @@ footer p{
 .home .box a.blue{ color: blue;}
 .home .box a.red{ color: red;}
 
-/* ===== CREATE ===== */
+/* ========= CREATE ========= */
 nav{
     width: 100%;
     padding: 10px 10%;
@@ -184,7 +195,7 @@ nav ul li a:hover{ color: #333; }
     background: rgba(255, 0, 0, 0.6);
 }
 
-/* ===== DRAW ===== */
+/* ======== DRAW ========= */
 .draw_content{
     width: 100%;
     padding: 40px 0;
@@ -221,11 +232,14 @@ nav ul li a:hover{ color: #333; }
 .mapedit{
     position: absolute;
     left: 0; bottom: 0; right: 0; top: 0;
+    background-color: #FFFFFF;
 }
+
+/* --------- menu --------- */
 .mapedit .top{
     position: absolute;
     top: 0; right: 0; left: 3em;
-    z-index: 2;
+    z-index: 3;
     background: rgba(255,255,255,0.8);
     padding: 10px;
 }
@@ -253,20 +267,220 @@ nav ul li a:hover{ color: #333; }
 }
 .mapedit .top .maislayers p{
     padding: 5px;
-    font-size: 0.9em;
+    text-align: right;
+    font-size: 1.5em;
     font-weight: 600;
     color: red;
-    text-shadow: 1px 1px 1px #ccc;
+    text-shadow: 1px 1px 1px #666;
     cursor: pointer;
     transition: 0.5s;
 }
 .mapedit .top .maislayers p:hover{
-    font-size: 1.1em;
     color: #333;
     transition: 0.5s;
+    margin-right: 10px;
 }
+
+.top .layersFloat {
+    width: 100%;
+    padding: 10px 40px;
+    background: #fff;
+    display: none;
+}
+.top .layersFloat .box{
+    border-left: 2px solid #ccc;
+    padding-left: 25px;
+}
+.top .layersFloat .box li{
+    list-style: none;
+    width: 50%;
+    float: left;
+}
+.top .layersFloat .box p{
+    margin-left: 30px;
+}
+.top .layersFloat .box select{
+    width: 85%;
+    background: #fff;
+    margin:10px 10% 15px 5%;
+    padding: 7px;
+}
+.top .layersFloat .btn{
+    color: blue;
+    float: left;
+}
+.top .layersFloat .btn:hover{
+    color: #000;
+}
+.top .layersFloat button.btn{
+    color: #000;
+    float: left;
+}
+.top .layersFloat button.btn:hover{
+    background: #999;
+}
+
+
 .mapedit img{
     position: absolute;
     bottom: 20px; right: 20px;
     z-index: 1;
+}
+
+/* ------ botões de ações (lado esquerdo) ----- */
+.mapedit .functionsType{
+    position: absolute;
+    width: 2.54em;
+    bottom:100px;
+    left:5px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 3px;
+    padding: 0px 3px 2px 3px;
+    z-index: 2;
+}
+.mapedit .functionsType .btn{
+    position: relative;
+    display: block;
+    background:rgba(0,60,136,.5);
+    margin-bottom: 1px;
+    cursor: pointer;
+    padding: 1px 2px 2px 2px;
+    font-size: 2em;
+    border-radius: 2px;
+    color: #FFF;
+}
+.mapedit .functionsType .btn:hover, .functionsType .btn.active{
+    background: rgba(0,60,136,.7);
+}
+.mapedit .toobar {
+    position: absolute;
+    width: auto;
+    bottom: 10px;
+    left:25%;
+    background: rgba(255,255,255,0.4);
+    border-radius: 2px;
+    padding: 3px;
+    display:none;
+    z-index: 2;
+}
+.mapedit .toobar p{
+    display: inline-block;
+    background: rgba(0,128,0,0.5);
+    padding: 8px 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+    font-family: Arial;
+}
+.mapedit .toobar p:hover, .toobar p.activeOptions{
+    background: rgba(0,128,0,0.7);
+}
+
+/* ----------- points ---------- */
+.mapedit .toobar form{
+    display: inline-block;
+    float: left;
+    margin-right: 30px;
+}
+.mapedit .toobar form input{
+    border: 1px solid #999;
+    padding: 4px;
+    font-size:0.9em;
+    margin-top:-5px !important;
+}
+.mapedit .toobar form button.localizar{
+    background: #999;
+    padding: 0 4px;
+    font-size: 1.2em;
+    margin-top:0px;
+    cursor: pointer;
+}
+.mapedit .toobar form button.localizar:hover{
+    background: #666;
+}
+
+
+.mapedit a.btnbackMap{
+    position: absolute;
+    z-index: 3;
+    bottom: 15px;
+    right: 90px;
+    text-decoration:none;
+    color: #636363;
+}
+.mapedit a.btnbackMap:hover{
+    color: #333;
+}
+
+/* ---------- formulario para inserção de dados ---------- */
+.mapedit .draw_form{
+    position: absolute;
+    right: 0;
+    width: 30%;
+    top: 14%;
+    z-index: 2;
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+    max-height: 70%;
+    overflow: auto;
+    display: none;
+}
+.mapedit .draw_form form, .draw_form form label{
+    width: 100%;
+}
+.mapedit .draw_form form .legend{
+    width: 100%;
+    display: block;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+.mapedit .draw_form form input{
+    width: 100%;
+    padding: 5px;
+    margin:5px 0 15px 0;
+}
+.mapedit .draw_form .btn{
+    background: #29a329;
+    color: #fff;
+    font-weight: 600;
+    float: right;
+    margin-right: 30px;
+}
+.mapedit .draw_form .btn:hover{
+    background: #1f7a1f;
+}
+.mapedit .draw_form .btn.btnblue{
+    background: #1a1aff;
+}
+.mapedit .draw_form .btn.btnblue:hover{
+    background: #0000b3;
+}
+
+/* ------------- EDIÇÃO DO ESTILO DOS MAPAS -----------*/
+.editStyle{
+    position: absolute;
+    width: 30%;
+    top: 30%;
+    left: 35%;
+    background: rgba(0,0,0,0.8);
+    padding: 30px;
+    z-index: 4;
+    border: 4px solid #999;
+    display: none;
+}
+.editStyle label{
+    display: block;
+    width: 100%;
+    margin:10px 0;
+    color: #fff;
+}
+.editStyle .btn{
+    background: #29a329;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 15px;
+}
+.editStyle .btn:hover{
+    background: #1f7a1f;
 }
