@@ -34,8 +34,9 @@
                 <input type="checkbox" name="6" value="6" style="display: inline-block; width: 25px;">1880
                 <input type="checkbox" name="7" value="7" style="display: inline-block; width: 25px;">1868
                 <div class="clear"></div>
-                <a class="closeForm icon-cancel-circle icon-notext" style="color: #333; cursor: pointer; position: absolute; bottom: 20px;"></a>
-                <img class="form_load" style="float: right; margin-top: 20px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
+
+                <a class="closeForm icon-cancel-circle icon-notext" style="color: #333; cursor: pointer; bottom: 20px;"></a>
+                <img class="form_load" style="float: right; margin-top: 25px; margin-left: 10px; position: relative; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
                 <button class="btn">Inserir</button>
                 </form>
                 <div class="clear"></div>

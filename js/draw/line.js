@@ -19,6 +19,7 @@
  var selectLine = new ol.interaction.Select();
  var eraseLine = new ol.interaction.Select();
  var wkt = new ol.format.WKT();
+ var resultWkt = true;
 
  var layerLine = new ol.layer.Vector({
     source: sourceLine,
@@ -48,10 +49,12 @@
     $('.delDado').fadeOut();
 
     drawLine.on('drawend', function(e) {
+        var featureAddLine = e.feature;
         generationWktLine(e);
     });
  });
 
+    var idCheck;
   $('#editLine').click(function(){
     ClearInteractionLine();
     $(this).addClass('activeOptions');
@@ -60,21 +63,36 @@
 
     selectLine.getFeatures().on('add', function(e) {
         var features = e.element;
-            $('.inserirDado').fadeOut();
-            $('.editDado').fadeIn();
-            $('.delDado').fadeOut();
-
-            var jsontext = $('#jsonMap').text();
-            window.alert(jsontext);
-            //$('.editDado input[name="id"').val(features.get('id'));
-            //$('.editDado input[name="nome"').val(features.get('nome'));
         features.on('change', function(e) {
-            generationWktLine();
+                if(features.get('id')){
+                    idCheck = features.get('id');
+                    generationWktEditLine();
+                }else{
+                    generationWktLine();
+                }
+        });
+        $('.inserirDado').fadeOut();
+        $('.editDado').fadeIn();
+        $('.delDado').fadeOut();
+
+        $(".editDado input").each(function(){
+            var colunmsName = $(this).attr('name');
+            if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
+                $('.editDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
+            }
+        });
+        var jsonAutor = $('#jsonAutor').text();
+        jsonAutor = JSON.parse(jsonAutor);
+
+        jsonAutor.forEach(function(resultado) {
+            if(resultado.id == features.get('rep_id')){
+                $('.editDado input[name="autor"]').val(resultado.name);
+            }
         });
     });
 
     return false;
- });
+    });
 
 $('#eraseLine').click(function(){
     ClearInteractionLine();
@@ -122,25 +140,38 @@ map.addLayer(layerLine);
  function ClearInteractionLine(){
         $("#lineOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(drawLine);
+        map.removeInteraction(selectLine);
+        map.removeInteraction(eraseLine);
  }
 
 function generationWktLine(){
-    var featureWkt, modifiedWkt;
-    var unionFeature = [];
+    var featureWkt;
 
     layerLine.getSource().forEachFeature(function(f) {
         var featureClone = f.clone();
         featureWkt = wkt.writeFeature(featureClone);
-
-        if(featureWkt.match(/MULTILINESTRING/)){
-            modifiedWkt = (featureWkt.replace(/MULTILINESTRING/g, '')), slice(1, -1);
-        }else{
-            modifiedWkt = (featureWkt.replace(/,/g, ', ')).replace(/LINESTRING/g, '');
-        }
-
-        unionFeature.push(featureWkt);
     });
 
-    layerLine.getSource().getFeatures().length ? $(".draw_form input[name='geom']").val('MULTILINESTRING( ' + unionFeature + ' )') : $(".draw_form input[name='geom']").val('');
+    layerLine.getSource().getFeatures().length ? $(".draw_form input[name='geom']").val(featureWkt) : $(".draw_form input[name='geom']").val('');
 }
+
+function generationWktEditLine(){
+    var featureWkt;
+
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'mapAtual') {
+                sublayer.getSource().forEachFeature(function(f) {
+                    if(f.get('id') == idCheck){
+                        var featureClone = f.clone();
+                        featureWkt = wkt.writeFeature(featureClone);
+                    }
+                });
+
+                $(".editDado input[name='geom']").val(featureWkt);
+            }
+        });
+    }
+}
+
 

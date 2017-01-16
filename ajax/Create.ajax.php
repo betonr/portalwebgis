@@ -149,8 +149,8 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $newAtribs = str_replace(" ", "", $delAtribs);
                             $newAtribs = explode(",", $newAtribs);
                             for($i=0; $i<(count($newAtribs)); $i++){
-                                //$atributo = Modify::Name($atribs[$i]);
-                                $atributo = $newAtribs[$i];
+                                $atributo = Modify::Name($atribs[$i]);
+                                //$atributo = $newAtribs[$i];
                                 if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
                                     if($verifyAtribs !== false){

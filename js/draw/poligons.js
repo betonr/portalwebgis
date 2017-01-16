@@ -43,15 +43,16 @@ $('.poligons').click(function() {
     ClearInteractionPoligons();
     $(this).addClass('activeOptions');
     map.addInteraction(drawPoligons);
+    $('.inserirDado').fadeIn();
+    $('.editDado').fadeOut();
+    $('.delDado').fadeOut();
 
     drawPoligons.on('drawend', function(e) {
         generationWktPoligons(e);
-        $('.inserirDado').fadeIn();
-        $('.editDado').fadeOut();
-        $('.delDado').fadeOut();
     });
  });
 
+  var idCheckPoligons;
   $('#editPoligons').click(function(){
     ClearInteractionPoligons();
     $(this).addClass('activeOptions');
@@ -60,11 +61,31 @@ $('.poligons').click(function() {
 
     selectPoligons.getFeatures().on('add', function(e) {
         var features = e.element;
+        features.on('change', function(e) {
+            if(features.get('id')){
+                idCheckPoligons = features.get('id');
+                generationWktPoligonsEdit();
+             }else{
+                generationWktPoligons();
+            }
+        });
         $('.inserirDado').fadeOut();
         $('.editDado').fadeIn();
         $('.delDado').fadeOut();
-        features.on('change', function(e) {
-            generationWktPoligons();
+
+        $(".editDado input").each(function(){
+            var colunmsName = $(this).attr('name');
+            if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
+                $('.editDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
+            }
+        });
+        var jsonAutor = $('#jsonAutor').text();
+        jsonAutor = JSON.parse(jsonAutor);
+
+        jsonAutor.forEach(function(resultado) {
+            if(resultado.id == features.get('rep_id')){
+                $('.editDado input[name="autor"]').val(resultado.name);
+            }
         });
     });
 
@@ -117,24 +138,36 @@ $('#erasePoligons').click(function(){
  function ClearInteractionPoligons(){
         $("#poligonsOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(drawPoligons);
+        map.removeInteraction(selectPoligons);
+        map.removeInteraction(erasePoligons);
  }
 
 function generationWktPoligons(){
-    var featureWkt, modifiedWkt;
-    var unionFeature = [];
+    var featureWkt;
 
     layerPoligons.getSource().forEachFeature(function(f) {
         var featureClone = f.clone();
         featureWkt = wkt.writeFeature(featureClone);
-
-        if(featureWkt.match(/MULTIPOLYGON/)){
-            modifiedWkt = (featureWkt.replace(/MULTIPOLYGON/g, '')), slice(1, -1);
-        }else{
-            modifiedWkt = (featureWkt.replace(/,/g, ', ')).replace(/POLYGON/g, '');
-        }
-
-        unionFeature.push(featureWkt);
     });
 
-    layerPoligons.getSource().getFeatures().length ? $(".draw_form input[name='geom']").val('MULTIPOLYGON( ' + unionFeature + ' )') : $(".draw_form input[name='geom']").val('');
+    layerPoligons.getSource().getFeatures().length ? $(".draw_form input[name='geom']").val(featureWkt) : $(".draw_form input[name='geom']").val('');
+}
+
+function generationWktPoligonsEdit(){
+    var featureWkt;
+
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'mapAtual') {
+                sublayer.getSource().forEachFeature(function(f) {
+                    if(f.get('id') == idCheckPoligons){
+                        var featureClone = f.clone();
+                        featureWkt = wkt.writeFeature(featureClone);
+                    }
+                });
+
+                $(".editDado input[name='geom']").val(featureWkt);
+            }
+        });
+    }
 }

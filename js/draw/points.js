@@ -18,6 +18,7 @@
     var drawPoints;
     var sourcePoint = new ol.source.Vector();
     var erasePoint = new ol.interaction.Select();
+    var selectPoint = new ol.interaction.Select();
     var latitude = $("[name='latitude']");
     var longitude = $("[name='longitude']");
     var wktpoint = $(".draw_form input[name='geom']");
@@ -85,6 +86,37 @@
         return false;
     });
 
+    $('#editPoint').click(function(){
+        ClearInteractionPoints();
+        $(this).addClass('activeOptions');
+        map.addInteraction(selectPoint);
+
+        selectPoint.getFeatures().on('add', function(e) {
+            var features = e.element;
+            $('.inserirDado').fadeOut();
+            $('.editDado').fadeIn();
+            $('.delDado').fadeOut();
+            sourcePoint.clear();
+            $('.editDado input[name="geom"').val('');
+
+            $(".editDado input").each(function(){
+                var colunmsName = $(this).attr('name');
+                if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
+                    $('.editDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
+                }
+            });
+            var jsonAutor = $('#jsonAutor').text();
+            jsonAutor = JSON.parse(jsonAutor);
+
+            jsonAutor.forEach(function(resultado) {
+                if(resultado.id == features.get('rep_id')){
+                    $('.editDado input[name="autor"]').val(resultado.name);
+                }
+            });
+        });
+
+     });
+
     $('#erasePoint').click(function(){
         ClearInteractionPoints();
         $(this).addClass('activeOptions');
@@ -123,6 +155,8 @@
     function ClearInteractionPoints(){
         $("#pointsOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(drawPoints);
+        map.removeInteraction(erasePoint);
+        map.removeInteraction(selectPoint);
     }
 
     function generationCoordsPoint(f){

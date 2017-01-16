@@ -41,8 +41,8 @@ endif;
                     <select name="type">
                         <option value="" disabled selected>Select Geometry</option>
                         <option value="Point">Points</option>
-                        <option value="MultiLineString">Lines</option>
-                        <option value="MultiPolygon">Polygons</option>
+                        <option value="Linestring">Lines</option>
+                        <option value="Polygon">Polygons</option>
                     </select>
                 </label>
             </div>

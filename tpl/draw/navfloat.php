@@ -44,26 +44,25 @@
                 ?>
         </select>
         <button class="btn selectMap">Selecionar</button>
-        <center><a class="btn linkstyle">&#9998; Modificar o estilo do mapa</a></center>
+        <center><a class="btn linkstyle" title="postgis" id="Lbases">&#9998; Modificar Opacidade</a></center>
     </article>
     <article class="box box3">
-        <li><input type="checkbox" name="layerbase" value="mapAtual" checked><b><?= $title ?> <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></b></li>
-        <li><input type="checkbox" name="layerbase" value="sara" checked>1930 BASE <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="1920">1920 <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="1910">1910 <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="1900">1900 <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="1890">1890 <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="1880">1880 <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="1868">1868 <a title="mapAtual" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="distritos" checked>Distritos <a title="municipios" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="checkbox" name="layerbase" value="municipios" checked>Municipios <a title="distritos"class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="mapAtual" checked><b><?= $title ?> <a title="mapAtual" id="Lbases" class="linkstyle_complex icon-image" style="cursor: pointer; color: gray;"></a></b></li>
+        <li><input type="checkbox" name="layerbase" value="sara" checked>1930 BASE <a title="sara" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="1920">1920 <a title="1920" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="1910">1910 <a title="1910" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="1900">1900 <a title="1900" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="1890">1890 <a title="1890" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="1880">1880 <a title="1880" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="1868">1868 <a title="1868" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="distritos" checked>Distritos <a title="distritos"  id="Lbases" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" value="municipios" checked>Municipios <a title="municipios"  id="Lbases" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
     </article>
     <article class="box box3">
-        <li><input type="radio" name="layer" value="openstreetmap" checked>OpenStreetMap <a title="openstreetmap" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="radio" name="layer" value="google">Google <a title="google" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="radio" name="layer" value="google">Google eath <a title="google" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="radio" name="layer" value="esri">Esri Maps <a title="esri" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
-        <li><input type="radio" name="layer" value="stamen">Stamen <a title="stamen" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="radio" name="layer" value="openstreetmap" checked>OpenStreetMap <a title="openstreetmap"  id="Lmapa" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="radio" name="layer" value="bingRoad">Bing Road <a title="google" class="linkstyle icon-image"  id="Lmapa" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="radio" name="layer" value="esri">Esri Maps <a title="esri" class="linkstyle icon-image"  id="Lmapa" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="radio" name="layer" value="stamen">Stamen <a title="stamen" class="linkstyle icon-image"  id="Lmapa" style="cursor: pointer; color: gray;"></a></li>
         <li><input type="radio" name="layer" value="none">Blank</li>
     </article>
 </div>

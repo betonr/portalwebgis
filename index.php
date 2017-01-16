@@ -16,7 +16,6 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
     <meta charset="UTF-8">
         <meta name="mit" content="004671">
         <title><?= P_NAME; ?></title>
-        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <meta name="description" content="<?= P_DESC; ?>"/>
@@ -31,7 +30,7 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
         <link rel="stylesheet" href="css/reset.css"/>
     </head>
     <body>
-            <div class="login">
+           <div class="login">
                 <img class="logo" alt="<?= P_NAME; ?>" title="<?= P_NAME; ?>" src="images/logo.png"/>
                 <hr style="margin-bottom: 20px;">
                 <form name="login_form" action="" method="post" enctype="multipart/form-data">
@@ -48,7 +47,7 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
 
                     <label class="label">
                         <span class="legend">Mail:</span>
-                        <input type="email" class="user" name="email" placeholder="test@pauliceia.com" required/>
+                        <input type="email" class="user" name="email" placeholder="contato@pauliceia.com" required/>
                     </label>
 
                     <label class="label">
@@ -62,9 +61,10 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
                 </form>
             </div>
 
-        <script src="js/jquery.js"></script>
-        <script src="js/jquery.form.js"></script>
-        <script src="js/html5shiv.js"></script>
+        <script src="js/jquery/jquery.js"></script>
+        <script src="js/jquery/jquery.form.js"></script>
+        <script src="js/jquery/html5shiv.js"></script>
+        <script src="js/jquery/maskinput.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

@@ -6,7 +6,7 @@
                 <li style="background: #AAA;"><input type="checkbox" name="layerbase" value="distritos" checked>Distritos</li>
                 <li style="background: #AAA;"><input type="checkbox" name="layerbase" value="municipios" checked>Municipios</li>
                 <li style="background: #ccc;"><input type="radio" name="layer" value="openstreetmap" checked>OpenStreetMap</li>
-                <li style="background: #ccc;"><input type="radio" name="layer" value="google">Google</li>
+                <li style="background: #ccc;"><input type="radio" name="layer" value="esri">Esri</li>
                 <li style="background: #ccc;"><input type="radio" name="layer" value="none">Blank</li>
             </ul>
         </div>

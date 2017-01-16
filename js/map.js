@@ -1,7 +1,19 @@
+	if($.cookie("saveViewCenter") && $.cookie("saveViewCenter") != ''){
+		var long = parseFloat($.cookie("saveViewCenter"));
+		var lat = $.cookie("saveViewCenter").lastIndexOf(",");
+		lat = $.cookie("saveViewCenter").substr(lat+1);
+		lat = parseFloat(lat);
+
+		var centerMap = [long, lat];
+		var zoomMap = $.cookie("saveViewZoom");
+	}else{
+		var centerMap = [-5432905.961580031, -2530559.233689207];
+		var zoomMap = '7';
+	}
 	view = new ol.View({
-		center: [-5432905.961580031, -2530559.233689207],
-		zoom: 7,
-		maxZoom: 22,
+		center: centerMap,
+		zoom: zoomMap,
+		maxZoom: 20,
 		minZoom: 2
 	});
 
@@ -25,6 +37,15 @@
         		}),
 		visible: false,
 		name: 'esri'
+	});
+	var bingRoad = new ol.layer.Tile({
+		preload: Infinity,
+	          	source: new ol.source.BingMaps({
+	            		key: 'AqwD3uSJMGzPQGNGWetSkrdq3kTgIDODq_v-_72D7sQ0gWjkzTIVqzwQR3xqeaGo',
+	            		imagerySet: 'Road'
+	          	}),
+		visible: false,
+		name: 'bingRoad'
 	});
 	var stamen = new ol.layer.Group({
 		layers: [
@@ -97,7 +118,7 @@
 			new ol.control.ZoomSlider()
 		]),
 		renderer: 'canvas',
-		layers: [openstreetmap, esri, stamen, bases],
+		layers: [openstreetmap, esri, stamen, bingRoad, bases],
 		view: view
 	});
 
@@ -138,6 +159,7 @@
 	//ações de mostragem dos mapas do geoserver
 	$('.top .selectMap').click(function() {
 		var postgisSelect = $("select[name='dbpostgis']").val();
+		$('.titleMapStyle').attr('title', postgisSelect);
 		var postgislayer = 'pauliceia:'+postgisSelect+'';
 
 		if (bases instanceof ol.layer.Group){
@@ -155,4 +177,61 @@
 
 	});
 
+	//modificação de Estilos dos mapas
+	$('.actEditStyleC').click(function() {
+		var mapEdit = $('.complex input[name="map"]').val();
+		var idEdit = $('.complex input[name="id"]').val();
+		var backEdit = $('.complex input[name="background"]').val();
+		var alphaEdit = $('.complex input[name="alpha"]').val();
+		var strokeEdit = $('.complex input[name="stroke"]').val();
+		var styleEdit = new ol.style.Style
+		({
+			image: new ol.style.Circle({
+				radius: 5,
+				fill: new ol.style.Fill({ color: backEdit }),
+				stroke: new ol.style.Stroke({ color: strokeEdit })
+			}),
+			fill: new ol.style.Fill({ color: backEdit }),
+			stroke: new ol.style.Stroke({ color: strokeEdit })
+		});
 
+
+		if(idEdit == 'Lmapa'){
+			map.getLayers().getArray().forEach(function(e) {
+				if(e.get('name') == mapEdit){
+					e.setOpacity(parseFloat(alphaEdit));
+				}
+			});
+
+		}else if(idEdit == 'Lbases'){
+			if (bases instanceof ol.layer.Group){
+				bases.getLayers().forEach(function(sublayer){
+					if (sublayer.get('name') == mapEdit) {
+						sublayer.setOpacity(parseFloat(alphaEdit));
+						sublayer.setStyle(styleEdit);
+					}
+				});
+			}
+		}
+	});
+	$('.actEditStyle').click(function() {
+		var mapEdit = $('.simple input[name="map"]').val();
+		var idEdit = $('.simple input[name="id"]').val();
+		var alphaEdit = $('.simple input[name="alpha"]').val();
+		if(idEdit == 'Lmapa'){
+			map.getLayers().getArray().forEach(function(e) {
+				if(e.get('name') == mapEdit){
+					e.setOpacity(parseFloat(alphaEdit));
+				}
+			});
+		}else if(idEdit == 'Lbases'){
+			if (bases instanceof ol.layer.Group){
+				bases.getLayers().forEach(function(sublayer){
+					if (sublayer.get('name') == mapEdit) {
+						sublayer.setOpacity(parseFloat(alphaEdit));
+						sublayer.setStyle(styleEdit);
+					}
+				});
+			}
+		}
+	});

@@ -15,7 +15,6 @@ endif;
 <section class="create_content">
     <div class="content">
         <h1>Edit Maps</h1>
-
         <?php
         $sql = "SELECT * FROM tb_maps WHERE rep_id='{$Admin['id']}' ORDER BY datestart DESC";
         $result = pg_query(Connection::getConn(), $sql);
@@ -31,14 +30,14 @@ endif;
             }
 
         echo"
-            <article class='create_maps box box4'>
+            <article class='create_maps box box4' id='{$id}'>
                 <img src='images/icons/map3.png' title='' alt='' />
                 <h1>{$title} <span style='font-size:0.7em; {$statusStyle}'>( {$status} )</span></h1>
                 <p>{$description}</p>
                 <center>
                     <a href='dashboard.php?p=create/editForm&id={$id}' class='btn btn_edit'>EDIT</a>
-                    <span rel='map' class='btn btn_del j_delete_action icon-cancel-circle' id='{$id}'>DELETE</span>
-                    <span rel='map' rep='{$Admin['id']}' callback='Create' callback_action='create_delete' class='btn btn_del j_delete_action_confirm icon-warning' style='display:none; background: #cccc00' id='{$id}'>CONFIRMAR</span>
+                    <span rel='create_maps' class='btn btn_del j_delete_action icon-cancel-circle' id='{$id}'>DELETE</span>
+                    <span rel='create_maps' rep='{$Admin['id']}' callback='Create' callback_action='create_delete' class='btn btn_del j_delete_action_confirm icon-warning' style='display:none; background: #cccc00' id='{$id}'>CONFIRMAR</span>
                 </center>
             </article>
          ";
@@ -50,7 +49,7 @@ endif;
         }
 
         ?>
-        </form>
+
         <div class="clear"></div>
     </div>
 </section>

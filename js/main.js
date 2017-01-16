@@ -16,6 +16,24 @@ $(function() {
         }
     });
 
+    //Mascaras de formulário
+    $(".formDate").mask("99/99/9999");
+    $(".formTime").mask("99/99/9999 99:99");
+    $(".formCep").mask("99999-999");
+    $(".formCpf").mask("999.999.999-99");
+
+    $('.formPhone').focusout(function () {
+        var phone, element;
+        element = $(this);
+        element.unmask();
+        phone = element.val().replace(/\D/g, '');
+        if (phone.length > 10) {
+            element.mask("(99) 99999-999?9");
+        } else {
+            element.mask("(99) 9999-9999?9");
+        }
+    }).trigger('focusout');
+
     //Coloca todos os formulários em AJAX mode e inicia LOAD ao submeter!
     $('form').not('.ajax_off').submit(function () {
         var form = $(this);
@@ -59,9 +77,19 @@ $(function() {
                     //CLEAR INPUT's Draw
                     if (data.clearInput) {
                         form.find('input[id="clearForm"]').val('');
+                        inputCheck = $('.inserirDado input[type="checkbox"]');
+                        inputCheck.attr('checked', false);
+
                         window.setTimeout(function () {
                             $('.trigger_ajax').fadeOut('slow');
                         }, 3000);
+                    }
+
+                    //FORM Draw (display:none)
+                    if (data.none) {
+                        window.setTimeout(function () {
+                            $('.trigger_ajax').fadeOut('slow');
+                        }, 2000);
                     }
 
                 });
@@ -79,10 +107,11 @@ $(function() {
 
     //Botão de exclusão
     //DELETE CONFIRM
-    $('.j_delete_action').click(function () {
+   $('.j_delete_action').click(function () {
         var RelToMap = $(this).attr('rel');
         $(this).fadeOut('fast', function () {
-            $('.j_delete_action_confirm:eq(0)').fadeIn('fost');
+            //$('.j_delete_action_confirm:eq(0)').fadeIn('fast');
+            $('.' + RelToMap + '[id="' + $(this).attr('id') + '"] .j_delete_action_confirm:eq(0)').fadeIn('fast');
         });
     });
 
@@ -95,9 +124,11 @@ $(function() {
         var Callback_actionMap = $(this).attr('callback_action');
         $.post('ajax/' + CallbackMap + '.ajax.php', {callback: CallbackMap, callback_action: Callback_actionMap, del_id: DelIdMap, rep_id: repIdMap}, function (data) {
             if (data.trigger) {
-                $('.j_delete_action_confirm:eq(0)').fadeOut('fast', function () {
-                    $('.j_delete_action:eq(0)').fadeIn('slow');
+                $('.' + RelToMap + '[id="' + PreventMap.attr('id') + '"] .j_delete_action_confirm:eq(0)').fadeOut('fast', function () {
+                    $('.' + RelToMap + '[id="' + PreventMap.attr('id') + '"] .j_delete_action:eq(0)').fadeIn('slow');
                 });
+            }else {
+                $('.' + RelToMap + '[id="' + DelIdMap + '"]').fadeOut('slow');
             }
 
             //REDIRECIONA
@@ -120,7 +151,54 @@ $(function() {
     });
 
     //OPEN POPUP STYLE MAP
-    $('.linkstyle').click(function () {
-        $('.editStyle').fadeIn();
+    $('.linkstyle_complex').click(function () {
+        $('.complex').fadeIn();
+        var nameMapStyle = $(this).attr('title');
+        var idMapStyle = $(this).attr('id');
+        $('.editStyle input[name="map"]').val(nameMapStyle);
+        $('.editStyle input[name="id"]').val(idMapStyle);
     });
+
+    $('.linkstyle').click(function () {
+        $('.simple').fadeIn();
+        var nameMapStyle = $(this).attr('title');
+        var idMapStyle = $(this).attr('id');
+        $('.editStyle input[name="map"]').val(nameMapStyle);
+        $('.editStyle input[name="id"]').val(idMapStyle);
+    });
+
+    //btn RECARREGAMENTO de PÁGINA
+    $('.recEditado').click(function () {
+        var viewCenter = map.getView().getCenter();
+        var viewZoom = map.getView().getZoom();
+
+        $.cookie("saveViewCenter", viewCenter);
+        $.cookie("saveViewZoom", viewZoom);
+
+        location.reload();
+    });
+
+    $('.recDefault').click(function () {
+
+        $.removeCookie("saveViewCenter");
+        $.removeCookie("saveViewZoom");
+
+        location.reload();
+    });
+
+    //btn ativar TROCA DE SENHA
+    $('.actnewPass').click(function () {
+        $('.newpass').slideToggle();
+
+        if (!$(this).hasClass('actPass')) {
+            $(this).addClass('actPass');
+            $(this).text('Não Alterar Senha');
+        }else{
+            $(this).removeClass('actPass');
+            $(this).text('Alterar Senha');
+            $('.newpass input').val('');
+        }
+
+    });
+
 });

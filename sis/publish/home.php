@@ -8,40 +8,42 @@ endif;
 <section class="create_content">
     <div class="content">
         <h1>Publish Maps</h1>
-
         <?php
-            $service = "http://localhost:8080/geoserver/"; //url do geoserver
-            $request = "rest/workspaces/pauliceia"; // Local dos workspaces
-            $url = $service . $request;
-            $ch = curl_init($url);
-
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //option to return string
-
-            //AUTENTICAÇÃO
-            $passwordStr = "admin:geoserver"; // replace with your username:password
-            curl_setopt($ch, CURLOPT_USERPWD, $passwordStr);
-
-            //DELETE data
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/atom+xml"));
-
-            //DELETE return code
-            $successCode = 200;
-
-            //tratando o resultado
-            $buffer = curl_exec($ch);
-            $buffer = strip_tags(trim($buffer));
-            $pos1 = strpos($buffer, '"')+1;
-            $buffer = substr($buffer, $pos1);
-            $pos2 = strpos($buffer, '"')+1;
-            $buffer = substr($buffer, $pos2);
-
-            $buffer = trim($buffer);
-            $newbuffer = explode("\n", $buffer);
-
-            curl_close($ch);
+        $sql = "SELECT * FROM tb_maps WHERE rep_id='{$Admin['id']}' ORDER BY datestart DESC";
+        $result = pg_query(Connection::getConn(), $sql);
+        if(pg_num_rows($result) > 0){
+            foreach (pg_fetch_all($result) as $MAP):
+            extract($MAP);
+            if($status == 0){
+                $status = 'NÃO PUBLICADO';
+                $statusStyle = 'color: red;';
+            }else{
+                $status = 'PUBLICADO';
+                $statusStyle = 'color: green;';
+            }
+            ?>
+                <article class='create_maps box box4' id='<?= $id ?>'>
+                    <h1><?= $title ?><span style='font-size:0.7em; <?= $statusStyle ?>'> ( <?=$status ?> )</span></h1>
+                    <p><?= $description ?></p>
+                    <center>
+                    <?php
+                    if($status=='PUBLICADO'){ ?>
+                        <span rel='create_maps' class='btn btn_del j_delete_action icon-cancel-circle' id='<?= $id ?>'>DESPUBLICAR MAPA</span>
+                        <span rel='create_maps' rep='<?= $Admin['id'] ?>' callback='Publish' callback_action='publish_delete' class='btn btn_del j_delete_action_confirm icon-warning' style='display:none; background: #cccc00' id='<?= $id ?>'>CONFIRMAR</span>
+                    <?php }else{ ?>
+                        <span rel='create_maps' class='btn btn_edit j_delete_action icon-folder-open' id='<?= $id ?>'>PUBLICAR MAPA</span>
+                        <span rel='create_maps' rep='<?= $Admin['id'] ?>' callback='Publish' callback_action='publish_create' class='btn btn_edit j_delete_action_confirm icon-warning' style='display:none; background: #cccc00' id='<?= $id ?>'>CONFIRMAR</span>
+                    <?php } ?>
+                        </center>
+                    </article>
+                <?php
+            endforeach;
+        }else{
+            echo '<br>';
+            echo Erro("<span class='icon-notification'>{$Admin['name']}, there are no registered maps !</span>", E_USER_NOTICE);
+        }
 
         ?>
-        </form>
         <div class="clear"></div>
     </div>
 </section>

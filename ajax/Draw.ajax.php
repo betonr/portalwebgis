@@ -30,10 +30,6 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 if($conn->getConn()){
 
                     $date = date("Y/m/d");
-                    $PostData['geom'] = str_replace(" LINESTRING", "", $PostData['geom']);
-                    $PostData['geom'] = str_replace(",LINESTRING", ",", $PostData['geom']);
-                    $PostData['geom'] = str_replace(" POLYGON", "", $PostData['geom']);
-                    $PostData['geom'] = str_replace(",POLYGON", ",", $PostData['geom']);
                     $PostData['camadas']='';
                     for($j=1;$j<8;$j++){
                         if(isset($PostData[$j]) && !empty($PostData[$j])){
@@ -65,7 +61,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $jSON['trigger'] = AjaxErro('Data inserted successfully');
                         $jSON['clearInput'] = true;
                     }else{
-                        $jSON['trigger'] = AjaxErro('Erro: confira seus dados, obs: não é permitido aspas', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
                     }
 
                 }else{
@@ -73,11 +69,51 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             }
             break;
+
             case 'draw_delete':
                 $sql = "DELETE FROM {$PostData['tb_name']} WHERE id={$PostData['del_id']}";
                 $result = pg_query($conn->getConn(), $sql);
                 if(pg_affected_rows($result) <= 0){
                     $jSON['erro'] = true;
+                }
+            break;
+
+            case 'draw_editar':
+                if($conn->getConn()){
+
+                    $date = date("Y/m/d");
+                    $mapname = $PostData['map'];
+
+                    $sql = "UPDATE {$mapname} SET datemod='{$date}', camadas='{$PostData['camadas']}', rep_id='{$PostData['responsavel']}'";
+
+                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
+                    $result = pg_query($conn->getConn(), $sqlcolumn);
+                    if(pg_num_rows($result) > 0){
+                        $atributos = pg_fetch_all($result);
+                        foreach ($atributos as $columns){
+                            extract($columns);
+                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
+                                $sql .= ", {$column_name}=";
+                                $atributo = $PostData[$column_name];
+                                $sql .= "'{$atributo}'";
+                            }
+                        }
+                    }
+                    $sql .= "WHERE id={$PostData['id']}";
+                    $result = pg_query($conn->getConn(), $sql);
+                    if($PostData['geom'] != ''){
+                        $sql = "UPDATE {$mapname} SET geom=st_GeomFromText('{$PostData['geom']}', 4326) WHERE id={$PostData['id']}";
+                    }
+                    $result = pg_query($conn->getConn(), $sql);
+                    if($result){
+                        $jSON['trigger'] = AjaxErro('Data updated successfully');
+                        $jSON['none'] = true;
+                    }else{
+                        $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
+                    }
+
+                }else{
+                    $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
             break;
 

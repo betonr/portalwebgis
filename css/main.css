@@ -331,7 +331,7 @@ nav ul li a:hover{ color: #333; }
 .mapedit .functionsType{
     position: absolute;
     width: 2.54em;
-    bottom:100px;
+    bottom:250px;
     left:5px;
     background: rgba(255,255,255,0.4);
     border-radius: 3px;
@@ -349,14 +349,36 @@ nav ul li a:hover{ color: #333; }
     border-radius: 2px;
     color: #FFF;
 }
-.mapedit .functionsType .btn:hover, .functionsType .btn.active{
+.mapedit .recarregamento{
+    position: absolute;
+    width: 2.54em;
+    bottom:75px;
+    left:5px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 3px;
+    padding: 3px 3px 2px 3px;
+    z-index: 2;
+}
+.mapedit .recarregamento .btn{
+    position: relative;
+    display: block;
+    background:rgba(0,60,136,.5);
+    margin-bottom: 1px;
+    cursor: pointer;
+    padding: 1px 2px 2px 2px;
+    font-size: 2em;
+    border-radius: 2px;
+    color: #FFF;
+}
+.mapedit .functionsType .btn:hover, .functionsType .btn.active, .recarregamento .btn:hover{
     background: rgba(0,60,136,.7);
 }
+
 .mapedit .toobar {
     position: absolute;
     width: auto;
     bottom: 10px;
-    left:25%;
+    left:20%;
     background: rgba(255,255,255,0.4);
     border-radius: 2px;
     padding: 3px;
@@ -422,7 +444,7 @@ nav ul li a:hover{ color: #333; }
     z-index: 2;
     background: rgba(255,255,255,0.8);
     padding: 20px;
-    max-height: 70%;
+    max-height:70%;
     overflow: auto;
     display: none;
 }
@@ -484,3 +506,7 @@ nav ul li a:hover{ color: #333; }
 .editStyle .btn:hover{
     background: #1f7a1f;
 }
+
+/* ======== EXCLUSÃO ========= */
+.del_colaborador .btn{ background: #e60000; color: #fff; padding: 3px 10px;}
+.del_colaborador .btn:hover{ background: #cc0000;}

@@ -14,7 +14,6 @@ if (isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $
         header('Location: ./index.php');
     else:
         $Admin = $_SESSION['userLogin'];
-        //$Admin['user_thumb'] = (!empty($Admin['user_thumb']) && file_exists("../uploads/{$Admin['user_thumb']}") && !is_dir("../uploads/{$Admin['user_thumb']}") ? $Admin['user_thumb'] : '../admin/_img/no_avatar.jpg');
         $DashboardLogin = true;
     endif;
 else:
@@ -36,7 +35,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Portal WEB - <?= P_NAME; ?></title>
         <meta name="description" content="<?= P_DESC; ?>"/>
         <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -52,8 +51,10 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="css/fonticon.css"/>
 
-        <script src="js/jquery.js"></script>
-        <script src="js/jquery.form.js"></script>
+        <script src="js/jquery/jquery.js"></script>
+        <script src="js/jquery/cookie.js"></script>
+        <script src="js/jquery/jquery.form.js"></script>
+        <script src="js/jquery/maskinput.js"></script>
         <script src="js/main.js"></script>
 
     </head>
