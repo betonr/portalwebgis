@@ -83,8 +83,13 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
                     $date = date("Y/m/d");
                     $mapname = $PostData['map'];
-
-                    $sql = "UPDATE {$mapname} SET datemod='{$date}', camadas='{$PostData['camadas']}', rep_id='{$PostData['responsavel']}'";
+                    $camadasSelect='';
+                    for($z=1;$z<8;$z++){
+                        if(isset($PostData[$z])){
+                            $camadasSelect .= $z.', ';
+                        }
+                    }
+                    $sql = "UPDATE {$mapname} SET datemod='{$date}', camadas='{$camadasSelect}', rep_id='{$PostData['responsavel']}'";
 
                     $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
                     $result = pg_query($conn->getConn(), $sqlcolumn);

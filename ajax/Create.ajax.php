@@ -29,7 +29,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }else{
                 if($conn->getConn()){
 
-                    //$PostData['name'] = Modify::Name($PostData['name']);
+                    //$PostData['name'] = Modify::Nome($PostData['name']);
                     $sql = "SELECT * FROM tb_maps WHERE name='{$PostData['name']}'";
                     $result = pg_query($conn->getConn(), $sql);
                     if(pg_num_rows($result) > 0){
@@ -53,7 +53,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $atribs = str_replace(" ", "", $PostData['atribs']);
                         $atribs = explode(",", $atribs);
                         for($i=0; $i<(count($atribs)); $i++){
-                            //$atributo = Modify::Name($atribs[$i]);
+                            //$atributo = Modify::Nome($atribs[$i]);
                             $atributo = $atribs[$i];
                             $sql = "ALTER TABLE public.{$PostData['name']} ADD {$atributo} character varying NOT NULL";
                             $result = pg_query($conn->getConn(), $sql);
@@ -83,7 +83,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }else{
                 if($conn->getConn()){
 
-                    //$PostData['name'] = Modify::Name($PostData['name']);
+                    //$PostData['name'] = Modify::Nome($PostData['name']);
                     $sql = "SELECT * FROM tb_maps WHERE (name='{$PostData['name']}' AND id<>{$PostData['id']}) OR (name='{$PostData['name']}' AND rep_id<>'{$PostData['responsavel']}')";
                     $result = pg_query($conn->getConn(), $sql);
                     if(pg_num_rows($result) > 0){
@@ -121,7 +121,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $newAtribs = str_replace(" ", "", $addAtribs);
                             $newAtribs = explode(",", $newAtribs);
                             for($i=0; $i<(count($newAtribs)); $i++){
-                                //$atributo = Modify::Name($atribs[$i]);
+                                //$atributo = Modify::Nome($newAtribs[$i]);
                                 $atributo = $newAtribs[$i];
                                 if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
@@ -149,8 +149,8 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $newAtribs = str_replace(" ", "", $delAtribs);
                             $newAtribs = explode(",", $newAtribs);
                             for($i=0; $i<(count($newAtribs)); $i++){
-                                $atributo = Modify::Name($atribs[$i]);
-                                //$atributo = $newAtribs[$i];
+                                //$atributo = Modify::Nome($newAtribs[$i]);
+                                $atributo = $newAtribs[$i];
                                 if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
                                     if($verifyAtribs !== false){

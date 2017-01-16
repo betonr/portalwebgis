@@ -104,7 +104,19 @@
                 if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
                     $('.editDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
                 }
+                if(colunmsName == 'camadas'){
+                var camadasSelect = features.get(colunmsName);
+                    for(var i=1; i<=7; i++){
+                        var searchCam = i+',';
+                        if(camadasSelect.indexOf(searchCam) != -1){
+                            $('.editDado input[name="'+i+'"').prop("checked", true);
+                        }else{
+                            $('.editDado input[name="'+i+'"').prop("checked", false);
+                        }
+                    }
+                }
             });
+
             var jsonAutor = $('#jsonAutor').text();
             jsonAutor = JSON.parse(jsonAutor);
 
