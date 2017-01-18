@@ -15,11 +15,13 @@ endif;
 <section class="create_content">
     <div class="content">
         <h1>Create new Map</h1>
+        <p style="text-align:center; margin: 20px 0 -20px 0;">Os atributos referentes a ao número de idenificação(id), a geometry do conteúdo, a data de publicação, as camadas que o conteúdo encontrará e ao representante do mapa, são criados <b>AUTOMATICAMENTE</b>.</p>
         <form action="" name="create_form" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="callback" value="Create">
             <input type="hidden" name="callback_action" value="create_submit">
             <input type="hidden" name="responsavel" value="<?= $Admin['id'] ?>">
+            <input type="hidden" name="autor" value="<?= $Admin['name'] ?>">
 
             <div class="box box2">
                 <label>

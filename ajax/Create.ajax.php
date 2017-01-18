@@ -29,38 +29,45 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }else{
                 if($conn->getConn()){
 
-                    //$PostData['name'] = Modify::Nome($PostData['name']);
+                    $PostData['autor'] = str_replace(" ", "", $PostData['autor']);
+                    $PostData['name'] = $PostData['name'].'_'.$PostData['autor'];
+                    $PostData['name'] = Modify::Nome($PostData['name']);
                     $sql = "SELECT * FROM tb_maps WHERE name='{$PostData['name']}'";
                     $result = pg_query($conn->getConn(), $sql);
-                    if(pg_num_rows($result) > 0){
-                        $jSON['trigger'] = AjaxErro('This name already exists!', E_USER_ERROR);
+                    if((pg_num_rows($result) > 0) || ($PostData['name'] == 'tb_users') || ($PostData['name'] == 'tb_maps')){
+                        $jSON['trigger'] = AjaxErro('O nome do mapa já existe, escolha outro!', E_USER_ERROR);
                     }else{
 
                         $date = date("Y/m/d");
                         $PostData['atribs'] = str_replace(" ", "", $PostData['atribs']);
-                        $sql = "INSERT INTO tb_maps (title, name, description, type, atribs, rep_id, datestart, status) VALUES ('{$PostData['title']}', '{$PostData['name']}', '{$PostData['description']}', '{$PostData['type']}', '{$PostData['atribs']}', '{$PostData['responsavel']}', '{$date}', 0)";
-                        $result = pg_query($conn->getConn(), $sql);
-
-                        $sql = "CREATE TABLE public.{$PostData['name']} (
-                            id serial NOT NULL UNIQUE PRIMARY KEY,
-                            geom geometry({$PostData['type']},4326),
-                            rep_id integer NOT NULL,
-                            datemod date NOT NULL,
-                            camadas character varying
-                        )";
-                        $result = pg_query($conn->getConn(), $sql);
-
-                        $atribs = str_replace(" ", "", $PostData['atribs']);
-                        $atribs = explode(",", $atribs);
-                        for($i=0; $i<(count($atribs)); $i++){
-                            //$atributo = Modify::Nome($atribs[$i]);
-                            $atributo = $atribs[$i];
-                            $sql = "ALTER TABLE public.{$PostData['name']} ADD {$atributo} character varying NOT NULL";
+                        if((strpos($PostData['atribs'], 'id') !== false) || (strpos($PostData['atribs'], 'geom') !== false) || (strpos($PostData['atribs'], 'rep_id') !== false) || (strpos($PostData['atribs'], 'datemod') !== false) || (strpos($PostData['atribs'], 'camadas') !== false)){
+                            $jSON['trigger'] = AjaxErro('os atributos (id, geom, rep_id, datemod, camadas) já são criados atomaticamente. Favor retira-los da sua lista de atributos acima!', E_USER_ERROR);
+                        }else{
+                            $sql = "INSERT INTO tb_maps (title, name, description, type, atribs, rep_id, datestart, status) VALUES ('{$PostData['title']}', '{$PostData['name']}', '{$PostData['description']}', '{$PostData['type']}', '{$PostData['atribs']}', '{$PostData['responsavel']}', '{$date}', 0)";
                             $result = pg_query($conn->getConn(), $sql);
-                        }
 
-                        $jSON['trigger'] = AjaxErro('Map created successfully!');
-                        $jSON['redirect'] = 'dashboard.php?p=create/edit';
+                            $sql = "CREATE TABLE public.{$PostData['name']} (
+                                id serial NOT NULL UNIQUE PRIMARY KEY,
+                                geom geometry({$PostData['type']},4326),
+                                rep_id integer NOT NULL,
+                                datemod date NOT NULL,
+                                camadas character varying
+                            )";
+                            $result = pg_query($conn->getConn(), $sql);
+
+                            $atribs = str_replace(" ", "", $PostData['atribs']);
+                            $atribs = explode(",", $atribs);
+                            for($i=0; $i<(count($atribs)); $i++){
+                                $atributo = Modify::Nome($atribs[$i]);
+                                if($atributo != 'id' && $atributo != 'geom' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
+                                     $sql = "ALTER TABLE public.{$PostData['name']} ADD {$atributo} character varying NOT NULL";
+                                    $result = pg_query($conn->getConn(), $sql);
+                                }
+                            }
+
+                            $jSON['trigger'] = AjaxErro('Map created successfully!');
+                            $jSON['redirect'] = 'dashboard.php?p=create/edit';
+                        }
                     }
 
                 }else{
@@ -83,7 +90,9 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }else{
                 if($conn->getConn()){
 
-                    //$PostData['name'] = Modify::Nome($PostData['name']);
+                    $PostData['autor'] = str_replace(" ", "", $PostData['autor']);
+                    $PostData['name'] = $PostData['name'].'_'.$PostData['autor'];
+                    $PostData['name'] = Modify::Nome($PostData['name']);
                     $sql = "SELECT * FROM tb_maps WHERE (name='{$PostData['name']}' AND id<>{$PostData['id']}) OR (name='{$PostData['name']}' AND rep_id<>'{$PostData['responsavel']}')";
                     $result = pg_query($conn->getConn(), $sql);
                     if(pg_num_rows($result) > 0){
@@ -121,8 +130,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $newAtribs = str_replace(" ", "", $addAtribs);
                             $newAtribs = explode(",", $newAtribs);
                             for($i=0; $i<(count($newAtribs)); $i++){
-                                //$atributo = Modify::Nome($newAtribs[$i]);
-                                $atributo = $newAtribs[$i];
+                                $atributo = Modify::Nome($newAtribs[$i]);
                                 if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
                                     if($verifyAtribs === false){
@@ -149,8 +157,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $newAtribs = str_replace(" ", "", $delAtribs);
                             $newAtribs = explode(",", $newAtribs);
                             for($i=0; $i<(count($newAtribs)); $i++){
-                                //$atributo = Modify::Nome($newAtribs[$i]);
-                                $atributo = $newAtribs[$i];
+                                $atributo = Modify::Nome($newAtribs[$i]);
                                 if($atributo != 'geom' && $atributo != 'id' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
                                     $verifyAtribs = strpos($atribs, $atributo.',');
                                     if($verifyAtribs !== false){

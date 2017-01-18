@@ -16,7 +16,7 @@ class Modify {
      * @param STRING $Name = Uma string qualquer
      * @return STRING = $Data = String Convertida
      */
-    public function Nome($Name) {
+    public static function Nome($Name) {
         self::$Format = array(
             'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
             'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
@@ -29,6 +29,13 @@ class Modify {
              '+'=>'', '}'=>'', '{'=>'', '.'=>'', ','=>'', ';'=>'', ':'=>'', '?'=>'', '/'=>'', '|'=>'', '['=>'', ']'=>''
         );
         self::$Data = strtr($Name, self::$Format);
+
+        self::$Format = array(
+            '______'=>'_', '_____'=>'_', '____'=>'_', '___'=>'_', '__'=>'_'
+        );
+        self::$Data = strtr(self::$Data, self::$Format);
+
+        self::$Data = strtolower(self::$Data);
         return self::$Data;
     }
 

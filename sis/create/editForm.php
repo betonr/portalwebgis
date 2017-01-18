@@ -20,6 +20,9 @@ endif;
         if(pg_num_rows($result) > 0){
             $MAP = pg_fetch_all($result)[0];
             extract($MAP);
+            $adminName = strtolower('_'.$Admin['name']);
+            $adminName = str_replace(" ", "", $adminName);
+            $name = str_replace($adminName, "", $name);
             ?>
         <h1>Edit Map '<b><?= $title;?></b>'</h1>
         <form action="" name="create_form" method="post" enctype="multipart/form-data">
@@ -29,6 +32,7 @@ endif;
             <input type="hidden" name="responsavel" value="<?= $Admin['id'] ?>">
             <input type="hidden" name="id" value="<?= $id ?>">
             <input type="hidden" name="status" value="<?= $status ?>">
+            <input type="hidden" name="autor" value="<?= $Admin['name'] ?>">
 
             <div class="box box2">
                 <label>
