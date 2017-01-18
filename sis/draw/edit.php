@@ -155,6 +155,9 @@ endif;
         <!--- FORMULARIO DE EDIÇÃO DO DADO -->
         <?php require 'tpl/draw/editStyle.php'; ?>
 
+        <!--- FORMULARIO PARA SELEÇÃO DE CAMADAS DA LAYERS ATUAL -->
+        <?php require 'tpl/draw/selectCamadas.php'; ?>
+
     <?php }
     } ?>
 </section>

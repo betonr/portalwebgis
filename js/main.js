@@ -251,4 +251,18 @@ $(function() {
 
     });
 
+    //OPEN POPUP SELECT CAMADAS
+    $('.selectC').click(function () {
+        $('.selectCamadas').fadeIn();
+    });
+
+    //SELECT CAMADAS btn 'selecionar todas'
+    $('.selectCamadas .todasCamadas').click(function () {
+        $('.selectCamadas input[type=checkbox]').prop("checked", true);
+    });
+
+    //CLOSE POPUP STYLE MAP
+    $('.closeSelectC').click(function () {
+        $('.selectCamadas').fadeOut();
+    });
 });

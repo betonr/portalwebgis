@@ -507,6 +507,42 @@ nav ul li a:hover{ color: #333; }
     background: #1f7a1f;
 }
 
+/* ------------- Troca de camadas da layer -----------*/
+.selectCamadas{
+    position: absolute;
+    width: 30%;
+    top: 30%;
+    left: 35%;
+    background: rgba(0,0,0,0.8);
+    padding: 30px;
+    z-index: 4;
+    border: 4px solid #999;
+    color: #fff;
+    font-weight: 600;
+    display: none;
+}
+.selectCamadas input{
+    margin: 10px 3px 10px 20px;
+    color: #fff;
+}
+.selectCamadas a{
+    margin: 10px 3px 10px 20px;
+    cursor: pointer;
+}
+.selectCamadas a:hover{
+     color: #ccc;
+     text-decoration: underline;
+}
+.selectCamadas .btn{
+    background: #29a329;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 15px;
+}
+.selectCamadas .btn:hover{
+    background: #1f7a1f;
+}
+
 /* ======== EXCLUSÃO ========= */
 .del_colaborador .btn{ background: #e60000; color: #fff; padding: 3px 10px;}
 .del_colaborador .btn:hover{ background: #cc0000;}
