@@ -131,6 +131,7 @@ endif;
             <p class="btn" id="panLine">[ ]</p>
             <p class="btn" id="drawLine">Desenhar</p>
             <p class="btn" id="editLine">Editar</p>
+            <p class="btn" id="duplicLine">Duplicar</p>
             <p class="btn" id="eraseLine">Apagar</p>
         </div>
         <?php }elseif($type=='Polygon'){ ?>
@@ -138,6 +139,7 @@ endif;
             <p class="btn" id="panPoligons">[ ]</p>
             <p class="btn" id="drawPoligons">Desenhar</p>
             <p class="btn" id="editPoligons">Editar</p>
+            <p class="btn" id="duplicPoligons">Duplicar</p>
             <p class="btn" id="erasePoligons">Apagar</p>
         </div>
         <?php } ?>
@@ -148,6 +150,9 @@ endif;
 
         <!--- FORMULARIO DE EDIÇÃO DO DADO -->
         <?php require 'tpl/draw/editdados.php'; ?>
+
+        <!--- FORMULARIO DE DUPLICAÇÃO DO DADO -->
+        <?php require 'tpl/draw/duplicdados.php'; ?>
 
         <img src="images/logo.png" title="logo pauliceia">
         <a href="dashboard.php?p=home" title="portal web pauliceia" class="icon-office btnbackMap">Voltar ao Menu</a>

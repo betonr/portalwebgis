@@ -478,6 +478,12 @@ nav ul li a:hover{ color: #333; }
 .mapedit .draw_form .btn.btnblue:hover{
     background: #0000b3;
 }
+.mapedit .draw_form .btn.btnred{
+    background: #e60000;
+}
+.mapedit .draw_form .btn.btnred:hover{
+    background: #ff0000;
+}
 
 /* ------------- EDIÇÃO DO ESTILO DOS MAPAS -----------*/
 .editStyle{

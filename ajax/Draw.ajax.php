@@ -122,6 +122,54 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            case 'draw_duplic':
+                 if($conn->getConn()){
+
+                    $date = date("Y/m/d");
+                    $mapname = $PostData['map'];
+                    $camadasSelect='';
+                    for($z=1;$z<8;$z++){
+                        if(isset($PostData[$z])){
+                            $camadasSelect .= $z.', ';
+                        }
+                    }
+                    $sql = "SELECT id, st_astext(geom) geom FROM {$mapname} WHERE id={$PostData['id']}";
+                    $result = pg_query($conn->getConn(), $sql);
+                    $wktgeom = pg_fetch_all($result)[0];
+                    $geom = $wktgeom['geom'];
+
+                    $sqlkeys = "INSERT INTO {$mapname} (geom, rep_id, datemod, camadas";
+                    $sqlvalues = " VALUES (st_GeomFromText('{$geom}', 4326), {$PostData['responsavel']}, '{$date}', '{$camadasSelect}'";
+
+                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
+                    $result = pg_query($conn->getConn(), $sqlcolumn);
+                    if(pg_num_rows($result) > 0){
+                        $atributos = pg_fetch_all($result);
+                        foreach ($atributos as $columns){
+                            extract($columns);
+                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
+                                $sqlkeys .= ",{$column_name}";
+                                $atributo = $PostData[$column_name];
+                                $sqlvalues .= ", '{$atributo}'";
+                            }
+                        }
+                    }
+                    $sqlkeys .= ")";
+                    $sqlvalues .= ")";
+                    $sql = $sqlkeys.$sqlvalues;
+
+                    $result = pg_query($conn->getConn(), $sql);
+                    if($result){
+                        $jSON['trigger'] = AjaxErro('Data updated successfully');
+                        //$jSON['none'] = true;
+                    }else{
+                        $jSON['trigger'] = AjaxErro('Error: verifique seus dados, não é possível utilizar aspas.', E_USER_ERROR);
+                    }
+
+                }else{
+                    $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+                }
+            break;
 
     endswitch;
 

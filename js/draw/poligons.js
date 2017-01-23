@@ -17,6 +17,7 @@ $('.poligons').click(function() {
 
  var sourcePoligons = new ol.source.Vector();
  var selectPoligons = new ol.interaction.Select();
+  var duplicPoligons = new ol.interaction.Select();
  var erasePoligons = new ol.interaction.Select();
  var wkt = new ol.format.WKT();
 
@@ -45,6 +46,7 @@ $('.poligons').click(function() {
     map.addInteraction(drawPoligons);
     $('.inserirDado').fadeIn();
     $('.editDado').fadeOut();
+    $('.duplicDado').fadeOut();
     $('.delDado').fadeOut();
 
     drawPoligons.on('drawend', function(e) {
@@ -70,8 +72,9 @@ $('.poligons').click(function() {
             }
         });
         $('.inserirDado').fadeOut();
-        $('.editDado').fadeIn();
+        $('.duplicDado').fadeOut();
         $('.delDado').fadeOut();
+        $('.editDado').fadeIn();
 
         $(".editDado input").each(function(){
             var colunmsName = $(this).attr('name');
@@ -101,7 +104,49 @@ $('.poligons').click(function() {
     });
 
     return false;
- });
+    });
+
+    $('#duplicPoligons').click(function(){
+    ClearInteractionPoligons();
+    $(this).addClass('activeOptions');
+    map.addInteraction(duplicPoligons);
+
+    duplicPoligons.getFeatures().on('add', function(e) {
+        var features = e.element;
+        $('.inserirDado').fadeOut();
+        $('.editDado').fadeOut();
+        $('.delDado').fadeOut();
+        $('.duplicDado').fadeIn();
+
+        $(".duplicDado input").each(function(){
+            var colunmsName = $(this).attr('name');
+            if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'map'){
+                $('.duplicDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
+            }
+            if(colunmsName == 'camadas'){
+                var camadasSelect = features.get(colunmsName);
+                for(var i=1; i<=7; i++){
+                    var searchCam = i+',';
+                    if(camadasSelect.indexOf(searchCam) != -1){
+                        $('.duplicDado input[name="'+i+'"').prop("checked", true);
+                    }else{
+                        $('.duplicDado input[name="'+i+'"').prop("checked", false);
+                    }
+                }
+            }
+        });
+        var jsonAutor = $('#jsonAutor').text();
+        jsonAutor = JSON.parse(jsonAutor);
+
+        jsonAutor.forEach(function(resultado) {
+            if(resultado.id == features.get('rep_id')){
+                $('.duplicDado input[name="autor"]').val(resultado.name);
+            }
+        });
+    });
+
+    return false;
+    });
 
 $('#erasePoligons').click(function(){
     ClearInteractionPoligons();
@@ -150,6 +195,7 @@ $('#erasePoligons').click(function(){
         $("#poligonsOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(drawPoligons);
         map.removeInteraction(selectPoligons);
+        map.removeInteraction(duplicPoligons);
         map.removeInteraction(erasePoligons);
  }
 

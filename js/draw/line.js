@@ -17,6 +17,7 @@
 
  var sourceLine = new ol.source.Vector();
  var selectLine = new ol.interaction.Select();
+ var duplicLine = new ol.interaction.Select();
  var eraseLine = new ol.interaction.Select();
  var wkt = new ol.format.WKT();
  var resultWkt = true;
@@ -46,6 +47,7 @@
     map.addInteraction(drawLine);
     $('.inserirDado').fadeIn();
     $('.editDado').fadeOut();
+    $('.duplicDado').fadeOut();
     $('.delDado').fadeOut();
 
     drawLine.on('drawend', function(e) {
@@ -73,6 +75,7 @@
         });
         $('.inserirDado').fadeOut();
         $('.editDado').fadeIn();
+        $('.duplicDado').fadeOut();
         $('.delDado').fadeOut();
 
         $(".editDado input").each(function(){
@@ -98,6 +101,48 @@
         jsonAutor.forEach(function(resultado) {
             if(resultado.id == features.get('rep_id')){
                 $('.editDado input[name="autor"]').val(resultado.name);
+            }
+        });
+    });
+
+    return false;
+    });
+
+  $('#duplicLine').click(function(){
+    ClearInteractionLine();
+    $(this).addClass('activeOptions');
+    map.addInteraction(duplicLine);
+
+    duplicLine.getFeatures().on('add', function(e) {
+        var features = e.element;
+        $('.inserirDado').fadeOut();
+        $('.editDado').fadeOut();
+        $('.duplicDado').fadeIn();
+        $('.delDado').fadeOut();
+
+        $(".duplicDado input").each(function(){
+            var colunmsName = $(this).attr('name');
+            if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'map'){
+                $('.duplicDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
+            }
+            if(colunmsName == 'camadas'){
+                var camadasSelect = features.get(colunmsName);
+                for(var i=1; i<=7; i++){
+                    var searchCam = i+',';
+                    if(camadasSelect.indexOf(searchCam) != -1){
+                        $('.duplicDado input[name="'+i+'"').prop("checked", true);
+                    }else{
+                        $('.duplicDado input[name="'+i+'"').prop("checked", false);
+                    }
+                }
+            }
+        });
+        var jsonAutor = $('#jsonAutor').text();
+        jsonAutor = JSON.parse(jsonAutor);
+
+        jsonAutor.forEach(function(resultado) {
+            if(resultado.id == features.get('rep_id')){
+                $('.duplicDado input[name="autor"]').val(resultado.name);
             }
         });
     });
@@ -152,6 +197,7 @@ map.addLayer(layerLine);
         $("#lineOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(drawLine);
         map.removeInteraction(selectLine);
+        map.removeInteraction(duplicLine);
         map.removeInteraction(eraseLine);
  }
 

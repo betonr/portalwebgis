@@ -126,8 +126,9 @@
                 }
             });
         });
-
+        return false;
      });
+
 
     $('#erasePoint').click(function(){
         ClearInteractionPoints();
