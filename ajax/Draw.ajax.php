@@ -24,9 +24,6 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
     switch ($Case):
         //LOGIN
         case 'draw_insert':
-            if (in_array('', $PostData)){
-                $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_NOTICE);
-            }else{
                 if($conn->getConn()){
 
                     $date = date("Y/m/d");
@@ -67,7 +64,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }else{
                     $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
-            }
+
             break;
 
             case 'draw_delete':

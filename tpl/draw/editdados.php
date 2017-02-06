@@ -22,7 +22,7 @@
                             ?>
                             <label>
                                 <span class="legend">&#10143; <?= $column_name; ?>:</span>
-                                <input type="text" name="<?= $column_name; ?>" placeholder="<?= $column_name; ?>" required>
+                                <input type="text" name="<?= $column_name; ?>" placeholder="<?= $column_name; ?>">
                             </label>
                             <?php
                         }
