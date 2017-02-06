@@ -13,7 +13,7 @@
 	view = new ol.View({
 		center: centerMap,
 		zoom: zoomMap,
-		maxZoom: 20,
+		maxZoom: 25,
 		minZoom: 2
 	});
 
@@ -89,6 +89,15 @@
 				}),
 				visible: true,
 				name: 'distritos'
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.TileWMS({
+					url: 'http://localhost:8080/geoserver/ows',
+					params: {'LAYERS': 'pauliceia:mosaicoSaraa', 'TILED': true},
+					serverType: 'geoserver'
+				}),
+				visible: true,
+				name: 'sara'
 			}),
 			new ol.layer.Tile({
 				source: new ol.source.TileWMS({

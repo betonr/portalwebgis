@@ -132,6 +132,7 @@ endif;
             <p class="btn" id="drawLine">Desenhar</p>
             <p class="btn" id="editLine">Editar</p>
             <p class="btn" id="duplicLine">Duplicar</p>
+            <p class="btn" id="dividirLine">Dividir</p>
             <p class="btn" id="eraseLine">Apagar</p>
         </div>
         <?php }elseif($type=='Polygon'){ ?>

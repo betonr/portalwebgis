@@ -48,7 +48,8 @@
     </article>
     <article class="box box3">
         <li><input type="checkbox" name="layerbase" value="mapAtual" checked><b><?= $title ?> <a title="mapAtual" id="Lbases" class="linkstyle_complex icon-image" style="cursor: pointer; color: gray;"></a><a class="selectC icon-wrench" style="cursor: pointer; color: green;"></a></b></li>
-        <li><input type="checkbox" name="layerbase" id='saraLayer' value="1">1930 BASE <a title="sara" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" id='saraLayer' value="sara" checked>1930 BASE <a title="sara" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
+        <li><input type="checkbox" name="layerbase" id='saraLayer' value="1">1930 <a title="sara" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
         <li><input type="checkbox" name="layerbase" id='saraLayer' value="2">1920 <a title="1920" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
         <li><input type="checkbox" name="layerbase" id='saraLayer' value="3">1910 <a title="1910" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>
         <li><input type="checkbox" name="layerbase" id='saraLayer' value="4">1900 <a title="1900" id="Lsara" class="linkstyle icon-image" style="cursor: pointer; color: gray;"></a></li>

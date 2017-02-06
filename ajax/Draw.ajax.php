@@ -171,6 +171,52 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            case 'draw_dividir':
+                $date = date("Y/m/d");
+                $newGeom = $PostData['lines'];
+                $geomlines = explode('+',  $newGeom);
+                $map_name = $PostData['tb_name'];
+
+                $sql = "SELECT * FROM {$map_name} WHERE id={$PostData['div_id']}";
+                $result = pg_query($conn->getConn(), $sql);
+                $feature = pg_fetch_all($result)[0];
+
+                $i=0;
+                while($i<2){
+                    $geom = $geomlines[$i];
+                    $camadas = $feature['camadas'];
+
+                    $sqlkeys = "INSERT INTO {$map_name} (geom, rep_id, datemod, camadas";
+                    $sqlvalues = " VALUES (st_GeomFromText('{$geom}', 4326), {$PostData['autor']}, '{$date}', '{$camadas}'";
+
+                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$map_name}'";
+                    $result = pg_query($conn->getConn(), $sqlcolumn);
+                    if(pg_num_rows($result) > 0){
+                        $atributos = pg_fetch_all($result);
+                        foreach ($atributos as $columns){
+                            extract($columns);
+                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
+                                $sqlkeys .= ",{$column_name}";
+                                $atributo = $feature[$column_name];
+                                $sqlvalues .= ", '{$atributo}'";
+                            }
+                        }
+                    }
+                    $sqlkeys .= ")";
+                    $sqlvalues .= ")";
+                    $sql = $sqlkeys.$sqlvalues;
+
+                    $result = pg_query($conn->getConn(), $sql);
+                    $i++;
+                }
+
+                $sql = "DELETE FROM {$map_name} WHERE id={$PostData['div_id']}";
+                $result = pg_query($conn->getConn(), $sql);
+
+                $jSON['sucess'] = true;
+
+            break;
+
     endswitch;
 
     //RETORNA O CALLBACK
