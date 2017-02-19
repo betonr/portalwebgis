@@ -37,16 +37,16 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         if(pg_num_rows($result) > 0){
                              $ArrayResult = pg_fetch_all($result);
                              $_SESSION['userLogin'] = $ArrayResult[0];
-                             $jSON['trigger'] = AjaxErro("&#10004; Hello <b>{$ArrayResult[0]['name']},</b> Welcome!");
+                             $jSON['trigger'] = AjaxErro("&#10004; Olá <b>{$ArrayResult[0]['name']},</b> Seja Bem-Vindo!");
                              $jSON['redirect'] = 'dashboard.php?p=home';
                         }else{
-                            $jSON['trigger'] = AjaxErro('&#10008; You are not active in the system!', E_USER_ERROR);
+                            $jSON['trigger'] = AjaxErro('&#10008; Você não está ativo em nosso sistema!', E_USER_ERROR);
                         }
                     }else{
-                        $jSON['trigger'] = AjaxErro('&#10008; Mail or password incorrect!', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('&#10008; E-mail ou senha incorreta!', E_USER_ERROR);
                     }
                 }else{
-                    $jSON['trigger'] = AjaxErro('&#10008; Database not conected!', E_USER_ERROR);
+                    $jSON['trigger'] = AjaxErro('&#10008; Banco de dados não conectado!', E_USER_ERROR);
                 }
             }
             break;

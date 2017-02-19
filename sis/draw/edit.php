@@ -7,6 +7,10 @@ endif;
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
 <script src="js/ol3/ol-debug.js"></script>
+
+<script src="js/maps/online.js" defer></script>
+<script src="js/maps/nativo.js" defer></script>
+
 <script src="js/map.js" defer></script>
 
 <script src="js/draw/points.js" defer></script>

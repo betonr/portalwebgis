@@ -28,7 +28,7 @@ endif;
                     $statusStyle = 'color: green;';
                 }
 
-                echo"
+                echo "
                     <article class='draw_maps'><center>
                         <div class='view'><p>{$title} <span style='font-size:0.7em; {$statusStyle}'>( {$status} )</span></p></div>
                         <div class='view t50'><p>{$description}</p></div>

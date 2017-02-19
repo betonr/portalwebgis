@@ -64,7 +64,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
                 <a href="dashboard.php?p=home" title="pauliceia"><img src="images/logo.png" alt="[logo pauliceia]" title="logo pauliceia"/></a>
             </div>
             <div class="banner">
-                <p>Welcome, <b><?= $Admin['name']; ?></b>! </p>
+                <p>Seja Bem-Vindo(a) <b><?= $Admin['name']; ?></b>! </p>
                 <a class="icon-exit btn" title="logoff <?= P_NAME; ?>!" href="dashboard.php?p=home&logoff=true">LOGOFF!</a>
             </div>
             <div class="clear"></div>
@@ -88,7 +88,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         <center><a href="dashboard.php?p=home" title="home pauliceia" class="btnback icon-office">Voltar ao Menu Principal</a></center>
         <footer>
             <div class="content">
-                <p>2016 - Pauliceia 2.0</p>
+                <p>2017 - Pauliceia 2.0</p>
             </div>
         </footer>
     </body>

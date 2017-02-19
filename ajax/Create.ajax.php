@@ -60,7 +60,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             for($i=0; $i<(count($atribs)); $i++){
                                 $atributo = Modify::Nome($atribs[$i]);
                                 if($atributo != 'id' && $atributo != 'geom' && $atributo != 'rep_id' && $atributo != 'datemod' && $atributo != 'camadas'){
-                                     $sql = "ALTER TABLE public.{$PostData['name']} ADD {$atributo} character varying NOT NULL";
+                                     $sql = "ALTER TABLE public.{$PostData['name']} ADD {$atributo} character varying";
                                     $result = pg_query($conn->getConn(), $sql);
                                 }
                             }

@@ -56,7 +56,7 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
                     </label>
 
                     <img class="form_load" style="float: right; margin-top: 20px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
-                    <button class="btn">Log In!</button>
+                    <button class="btn">Entrar!</button>
                     <div class="clear"></div>
                 </form>
             </div>

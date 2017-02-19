@@ -203,7 +203,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             }
                         }
                     }else{
-                        $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('Banco de Dados não conectado!', E_USER_ERROR);
                     }
                 }
             break;
