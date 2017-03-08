@@ -4,7 +4,7 @@
  * Modify.class
  * Classe responável por alterar strings e dados no portal
  *
- * @copyright (c) 2016, Beto Noronha
+ * @author Beto Noronha
  */
 class Modify {
 

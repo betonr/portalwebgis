@@ -4,7 +4,12 @@ require '../config/infoBase.php';
 
 usleep(50000);
 
-//DEFINE O CALLBACK E RECUPERA O POST
+/* DEFINE CALLBACK (DRAW) E RECUPERA POST
+* página reponsável por receber os dados enviados pelos formulários,
+* tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
+*
+* @author Beto Noronha
+*/
 $jSON = null;
 $CallBack = 'Draw';
 $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -22,7 +27,9 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-        //LOGIN
+        /* INSERÇÃO DE CONTEÚDOS NOS MAPAS (tabelas) NO BD
+        * case responsável por inserir os dados espaciais na tabela
+        */
         case 'draw_insert':
                 if($conn->getConn()){
 
@@ -67,6 +74,9 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
             break;
 
+            /* DELETA OS CONTEÚDOS DOS MAPAS (tabelas) NO BD
+            * case responsável por deletar os dados espaciais na tabela
+            */
             case 'draw_delete':
                 $sql = "DELETE FROM {$PostData['tb_name']} WHERE id={$PostData['del_id']}";
                 $result = pg_query($conn->getConn(), $sql);
@@ -75,6 +85,9 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* EDIÇÃO dOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
+            * case responsável por editar os dados espaciais na tabela
+            */
             case 'draw_editar':
                 if($conn->getConn()){
 
@@ -119,6 +132,9 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* DUPLICAÇÃO DOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
+            * case responsável por duplicar os dados espaciais na tabela, fazendo ou não pequenas modificação no seu conteúdo
+            */
             case 'draw_duplic':
                  if($conn->getConn()){
 
@@ -168,6 +184,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* DUPLICAÇÃO DOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
+            * case responsável por duplicar um dado espacial, modificando em ambas partes a geometria desse.
+            * Ou seja, a primeira parte da divisão fica no dado original e a segunda parte no novo dado(o duplicado)
+            */
             case 'draw_dividir':
                 $date = date("Y/m/d");
                 $newGeom = $PostData['lines'];

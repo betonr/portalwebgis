@@ -1,4 +1,12 @@
 <?php
+/**
+ * Wrapper.class
+ * Classe responável realiza a omunicação entre o portal php e o GEOSERVER estipulado
+ *
+ * documentação de suas funções, pode ser encontradas em (http://docs.geoserver.org/stable/en/user/rest/examples/php.html)
+ * e (https://www.ibm.com/developerworks/library/os-geoserver/)
+ */
+
 ini_set("display_errors", "On");
 error_reporting(E_ALL);
 

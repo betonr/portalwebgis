@@ -4,7 +4,13 @@ require '../config/infoBase.php';
 
 usleep(50000);
 
-//DEFINE O CALLBACK E RECUPERA O POST
+/* DEFINE CALLBACK (LOGIN) E RECUPERA POST
+* página reponsável por receber os dados enviados pelos formulários,
+* tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
+*
+* @author Beto Noronha
+*/
+
 $jSON = null;
 $CallBack = 'Login';
 $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -22,7 +28,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-        //LOGIN
+        /* VALIDA OS DADOS E LOA NO SISTEMA
+        * case responsável por validar os dads inseridos pelo usuário, no fórmulário de login,
+        * e caso esteja correto, cria-se uma sessão no servidor para o usuário e redireciona- para o painel
+        */
         case 'login_submit':
             if (in_array('', $PostData)){
                 $jSON['trigger'] = AjaxErro('Informe seu e-mail e senha para logar!', E_USER_NOTICE);

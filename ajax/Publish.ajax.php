@@ -4,7 +4,12 @@ require '../config/infoBase.php';
 
 usleep(50000);
 
-//DEFINE O CALLBACK E RECUPERA O POST
+/* DEFINE CALLBACK (PUBLISH) E RECUPERA POST
+* página reponsável por receber os dados enviados pelos formulários,
+* tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
+*
+* @author Beto Noronha
+*/
 $jSON = null;
 $CallBack = 'Publish';
 $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -22,7 +27,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-        //LOGIN
+        /* DESPUBLICAÇÃO DE MAPAS NO GEOSERVER
+        * case responsável por EXCLUIR o mapa desejado, do GEOSERVER
+        * e alterar o status do mapa no BD, para 0
+        */
         case 'publish_delete':
             if (in_array('', $PostData)){
                 $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_NOTICE);
@@ -53,40 +61,44 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
             break;
 
-            case 'publish_create':
-            if (in_array('', $PostData)){
-                $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_NOTICE);
-            }else{
-                if($conn->getConn()){
+         /* PUBLIÇÃO DE MAPAS NO GEOSERVER
+        * case responsável por publicar o mapa desejado no GEOSERVER
+        * e alterar o status do mapa no BD, para 1
+        */
+        case 'publish_create':
+        if (in_array('', $PostData)){
+            $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_NOTICE);
+        }else{
+            if($conn->getConn()){
 
-                    $sql = "SELECT * FROM tb_maps WHERE id='{$PostData['del_id']}' AND rep_id='{$PostData['rep_id']}'";
-                    $result = pg_query($conn->getConn(), $sql);
-                    if(pg_num_rows($result) < 0){
-                        $jSON['trigger'] = AjaxErro('You do not have permission!', E_USER_ERROR);
+                $sql = "SELECT * FROM tb_maps WHERE id='{$PostData['del_id']}' AND rep_id='{$PostData['rep_id']}'";
+                $result = pg_query($conn->getConn(), $sql);
+                if(pg_num_rows($result) < 0){
+                    $jSON['trigger'] = AjaxErro('You do not have permission!', E_USER_ERROR);
+                }else{
+
+                    $MapSelect = pg_fetch_all($result)[0];
+                    extract($MapSelect);
+                    $description = Modify::remCaracter($description);
+                    if($type == 'Point'){
+                        $projectSrs = 4326;
                     }else{
-
-                        $MapSelect = pg_fetch_all($result)[0];
-                        extract($MapSelect);
-                        $description = Modify::remCaracter($description);
-                        if($type == 'Point'){
-                            $projectSrs = 4326;
-                        }else{
-                            $projectSrs = 3857;
-                        }
-
-                        $Geoserver = new Wrapper('http://localhost:8080/geoserver/', 'admin', 'geoserver');
-                        $Geoserver->createLayer($name, 'pauliceia', 'Postgis', $projectSrs, $description);
-
-                        $sql = "UPDATE tb_maps SET status=1 WHERE id={$PostData['del_id']}";
-                        $result = pg_query($conn->getConn(), $sql);
-                        $jSON['redirect'] = 'dashboard.php?p=publish/home';
+                        $projectSrs = 3857;
                     }
 
-                }else{
-                    $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+                    $Geoserver = new Wrapper('http://localhost:8080/geoserver/', 'admin', 'geoserver');
+                    $Geoserver->createLayer($name, 'pauliceia', 'Postgis', $projectSrs, $description);
+
+                    $sql = "UPDATE tb_maps SET status=1 WHERE id={$PostData['del_id']}";
+                    $result = pg_query($conn->getConn(), $sql);
+                    $jSON['redirect'] = 'dashboard.php?p=publish/home';
                 }
+
+            }else{
+                $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
             }
-            break;
+        }
+        break;
     endswitch;
 
     //RETORNA O CALLBACK

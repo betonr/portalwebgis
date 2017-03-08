@@ -2,9 +2,11 @@
 ob_start();
 session_start();
 
+//Executa a conexão com o banco de dados
 require 'config/infoBase.php';
 $Conn = new Connection();
 
+//verifica se o usuário tem uma sessão aberta no servidor, para que não precise logar-se novamente
 if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_SESSION['userLogin']['level'] >= 1){
   header('Location: dashboard.php?p=home');
 }
@@ -33,6 +35,7 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
            <div class="login">
                 <img class="logo" alt="<?= P_NAME; ?>" title="<?= P_NAME; ?>" src="images/logo.png"/>
                 <hr style="margin-bottom: 20px;">
+
                 <form name="login_form" action="" method="post" enctype="multipart/form-data">
                     <div class="callback_return" style="margin-bottom: -10px;">
                         <?php

@@ -4,7 +4,12 @@ require '../config/infoBase.php';
 
 usleep(50000);
 
-//DEFINE O CALLBACK E RECUPERA O POST
+/* DEFINE CALLBACK (CREATE) E RECUPERA POST
+* página reponsável por receber os dados enviados pelos formulários,
+* tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
+*
+* @author Beto Noronha
+*/
 $jSON = null;
 $CallBack = 'Create';
 $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -22,7 +27,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-        //LOGIN
+        /* CRIAÇÃO DE MAPA NO BD
+        * case responsável por criar uma tabela no banco de dados(refere-se um novo mapa)
+        * e adicionar as informações do mapa na tabela 'tb_maps' no BD
+        */
         case 'create_submit':
             if (in_array('', $PostData)){
                 $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_NOTICE);
@@ -76,6 +84,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
             break;
 
+        /* EDIÇÃO DE MAPA NO BD
+        * case responsável por editar a estutura da tabela, referente ao mapa desejado,
+        * e atualizar as informações do mapa na tabela 'tb_maps' no BD
+        */
         case 'edit_submit':
             if(isset($PostData['addAtribs']) && (!empty($PostData['addAtribs']))){
                 $addAtribs = $PostData['addAtribs'];
@@ -182,6 +194,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
             break;
 
+        /* EXCLUSÃO DE MAPA NO BD
+        * case responsável por excluir a tabela, referente ao mapa desejado,
+        * e excluir as informações do mapa desejado, na tabela 'tb_maps' do BD
+        */
         case 'create_delete':
                 if($conn->getConn()){
                     $sql = "SELECT * FROM tb_maps WHERE id={$PostData['del_id']} AND rep_id='{$PostData['rep_id']}'";

@@ -1,10 +1,15 @@
-<?php
+t<?php
 session_start();
 require '../config/infoBase.php';
 
 usleep(50000);
 
-//DEFINE O CALLBACK E RECUPERA O POST
+/* DEFINE CALLBACK (USERS) E RECUPERA POST
+* página reponsável por receber os dados enviados pelos formulários,
+* tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
+*
+* @author Beto Noronha
+*/
 $jSON = null;
 $CallBack = 'Info';
 $PostData = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -22,7 +27,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-        //LOGIN
+        /* EDIÇÃO DE USUÁRIO NO BD
+        * case responsável por verificar se o usuário existe no BD
+        * e posteriormente editar seu conteúdo
+        */
         case 'user_edit':
                 if($conn->getConn()){
 
@@ -59,6 +67,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* ATIVAÇÃO DE USUÁRIO EM SUA REDE DE COLABORADORES
+            * case responsável por verificar se o usuário existe ou se o mesmo está em sua rede de colabordores
+            * e caso não esteja, adiciona-se o usuário como seu colaborador
+            */
             case 'user_active':
                 if($conn->getConn()){
 
@@ -94,6 +106,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* ADICIONAR USUÁRIO NO BD
+            * case responsável por verificar os dados inseridos
+            * e salvar estes no BD, criando assim um novo usuário
+            */
             case 'user_add':
             if (in_array('', $PostData)){
                 $jSON['trigger'] = AjaxErro('Complete todos os campos!', E_USER_NOTICE);
@@ -130,6 +146,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
             break;
 
+            /* DELETAR USUÁRIO DO TIPO colaborador (nível 2) DO BD
+            * case responsável por verificar se o usuário(id) existe no BD
+            * e posteriormente deleta-lo
+            */
             case 'user_del':
                 if($conn->getConn()){
                     if(isset($PostData['del_id']) && !empty($PostData['del_id'])){
@@ -165,6 +185,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* DELETAR USUÁRIO DO TIPO responsável (nivel3) DO BD
+            * case responsável por verificar se o usuário(id) existe no BD
+            * e posteriormente deleta-lo
+            */
             case 'user_delresp':
                 if($conn->getConn()){
                     $sql = "DELETE FROM tb_maps WHERE rep_id='{$PostData['del_id']}'";
@@ -178,6 +202,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
+            /* PESQUISA DINÂMICA DE USUÁRIO NO BD
+            * case responsável realizar uma pesquisa dos usuário cadastrados no BD, de acordo com as especificações passadas pelo usuário.
+            * caso seja encontrado algum usuário, redireciona-se a uma url com os parametros escolhidos
+            */
             case 'search_user':
                 if(empty($PostData['search'])){
                     $jSON['redirect'] = 'dashboard.php?p=info/colaboradores';

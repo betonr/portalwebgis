@@ -5,7 +5,7 @@
  * Classe de Conexão com o banco de dados Postgres
  * Retorna um valor boleano pelo método getConn
  *
- * @copyright (c) 2016, Beto Noronha
+ * @author Beto Noronha
  */
 class Connection {
 

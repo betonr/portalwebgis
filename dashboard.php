@@ -5,6 +5,11 @@ session_start();
 require 'config/infoBase.php';
 $Conn = new Connection();
 
+/*
+* Lendo informações do usuário
+* Nesse bloco, é salvado os dados do usuário em array/dicionário chamado 'Admin'
+* Para se obter alguma informação do usuário logado no decorrer do programa, é necessáio chamar: $Admin['nome'] => para o nome | $Admin['email'] => para o email ...
+*/
 if (isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_SESSION['userLogin']['level'] >= 1):
     $sql = "SELECT * FROM tb_users WHERE id = {$_SESSION['userLogin']['id']}";
     $result = pg_query($Conn->getConn(), $sql);
@@ -21,6 +26,10 @@ else:
     header('Location: ./index.php');
 endif;
 
+/*
+* Deslogar no portal
+* Ao receber: 'logoff=true' em sua url, o sistema mata a sessão do usuário e redireciona para a página de login.
+*/
 $LogOff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
 if ($LogOff):
     $_SESSION['trigger_login'] = Erro("<b>LOGOFF:</b> Olá {$Admin['name']}, você desconectou com sucesso, volte logo!");
@@ -85,6 +94,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
              endif;
         //FIM QUERY STRING
         ?>
+
         <center><a href="dashboard.php?p=home" title="home pauliceia" class="btnback icon-office">Voltar ao Menu Principal</a></center>
         <footer>
             <div class="content">

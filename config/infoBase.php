@@ -1,4 +1,9 @@
 <?php
+/*
+* Arquivo responsável por: armazenar as constantes iniciais do projeto, inclur as classes em php e exibir os erros personalizadamente no portal.
+*
+* @author Beto Noronha
+*/
 
 /*
  * BANCO DE DADOS
@@ -18,6 +23,8 @@ define('P_DESC', 'Portal WEBGIS com informações históricas da cidade de São 
 
 /*
  * AUTO LOAD DE CLASSES
+ * Função responsável por carregar as classes em php, da pasta config, de maneira automática.
+ * Fazendo com que não seje necessário inclui-las novamente no decorrer das páginas
  */
 function MyAutoLoad($Class) {
     $cDir = ['SQL', 'Help'];
