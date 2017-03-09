@@ -17,12 +17,14 @@ Suas funcionalidades são:
 =================================================================================
  # Instalação do portal em uma máquina local
 
+
 Pré-requisitos, ter os seguintes softwares instalados:
  - tomcat 7 ou superior
  - GeoServer
  - postgresql, com extensão POSTGIS habilitada
  - apache
  - php 5.6
+
 
 Passo-a-Passo INSTALAÇÃO:
 
@@ -34,17 +36,12 @@ Passo-a-Passo INSTALAÇÃO:
  
  4° -> copiar os arquivos da pasta dados_geo e colar dentro da pasta 'documents' em seu sistema operacional
  
-
  5° -> fazer um clone do projeto, dentro do seu servidor local(apache), geralmente em: c:var/www/html/
  
-
-
  6° -> criar um banco de dados ESPACIAL (com extensão postgis ativada) chamado 'postgis', no postgresql
  
  7° -> importar as tabelas ( link ) no banco de dados criado no tópico acima
  
-
-
  8° -> executar o geoserver (geralmente na pasta: geoserver/bin/. Execute o comando sh startup.sh)
  
  9° -> abrir o navegador e acessar: 'localhost/portalwebgis' ou 'localhost:(porta do seu servidor)/portalwebgis'
