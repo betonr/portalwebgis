@@ -27,6 +27,7 @@ Pré-requisitos, ter os seguintes softwares instalados:
 Passo-a-Passo INSTALAÇÃO:
 
  1° -> fazer o download do GEOSERVER e dos mapas default no link( link ) 
+ 
  2° -> extrair os arquivos em uma pasta do seu computador
  
  3° -> copiar os arquivos da pasta geoserver_tpl e colar dentro da pasta de workspace do seu geoserver, geralmente em: geoserver/data_dir/workspace/
@@ -37,14 +38,16 @@ Passo-a-Passo INSTALAÇÃO:
  5° -> fazer um clone do projeto, dentro do seu servidor local(apache), geralmente em: c:var/www/html/
  
 
+
  6° -> criar um banco de dados ESPACIAL (com extensão postgis ativada) chamado 'postgis', no postgresql
  
  7° -> importar as tabelas ( link ) no banco de dados criado no tópico acima
  
+
 
  8° -> executar o geoserver (geralmente na pasta: geoserver/bin/. Execute o comando sh startup.sh)
  
  9° -> abrir o navegador e acessar: 'localhost/portalwebgis' ou 'localhost:(porta do seu servidor)/portalwebgis'
  
 
- ** Tutorial para o entendimento da estrutura de pastas do portal ( https://drive.google.com/file/d/0B_HLDpnyXInqcnNHSXVUMmc3Wk0/view?usp=sharing )
+ ** Tutorial para o entendimento da estrutura de pastas do portal (https://drive.google.com/file/d/0B_HLDpnyXInqcnNHSXVUMmc3Wk0/view?usp=sharing)
