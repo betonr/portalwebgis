@@ -1,10 +1,10 @@
-t<?php
+<?php
 session_start();
 require '../config/infoBase.php';
 
 usleep(50000);
 
-/* DEFINE CALLBACK (USERS) E RECUPERA POST
+/* DEFINE CALLBACK (INFO) E RECUPERA POST - usuarios
 * página reponsável por receber os dados enviados pelos formulários,
 * tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
 *
@@ -27,10 +27,10 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-        /* EDIÇÃO DE USUÁRIO NO BD
-        * case responsável por verificar se o usuário existe no BD
-        * e posteriormente editar seu conteúdo
-        */
+            /* EDIÇÃO DE USUÁRIO NO BD
+            * case responsável por verificar se o usuário existe no BD
+            * e posteriormente editar seu conteúdo
+            */
         case 'user_edit':
                 if($conn->getConn()){
 
