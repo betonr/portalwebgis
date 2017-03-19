@@ -15,102 +15,77 @@
         }
 });
 
- var sourceLine = new ol.source.Vector();
- var selectLine = new ol.interaction.Select();
- var duplicLine = new ol.interaction.Select();
- var dividirLine = new ol.interaction.Select();
+//VARIAVEIS (OBJETOS) -> line - PARA A INTERAÇÃO COM O MAPA
+var selectLine = new ol.interaction.Select();
+var wkt = new ol.format.WKT();
 
- var eraseLine = new ol.interaction.Select();
- var wkt = new ol.format.WKT();
- var wktdiv = new ol.format.WKT();
- var resultWkt = true;
-
- var layerLine = new ol.layer.Vector({
-    source: sourceLine,
-    visible: true,
-    name: 'lines'
- });
-
- var drawLine = new ol.interaction.Draw({
-    source: sourceLine,
+var drawLine = new ol.interaction.Draw({
+    source: vectorSourceAtual,
     type: 'LineString'
- });
+});
 
- var modifyLine = new ol.interaction.Modify({
+var modifyLine = new ol.interaction.Modify({
     features: selectLine.getFeatures(),
-        deleteCondition: function(event) {
-            return ol.events.condition.shiftKeyOnly(event) &&
-            ol.events.condition.singleClick(event);
-        }
- });
+    deleteCondition: function(event) {
+        return ol.events.condition.shiftKeyOnly(event) && ol.events.condition.singleClick(event);
+    }
+});
 
+//AO CLICAR NO BOTÃO DE DESENHAR
  $('#drawLine').click(function(){
-    ClearInteractionLine();
+    clearInteraction();
     $(this).addClass('activeOptions');
-    map.addInteraction(drawLine);
     $('.inserirDado').fadeIn();
     $('.editDado').fadeOut();
     $('.duplicDado').fadeOut();
     $('.delDado').fadeOut();
 
-    drawLine.on('drawend', function(e) {
-        var featureAddLine = e.feature;
-        generationWktLine(e);
-    });
+    var actExiste = 0;
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'mapAtual') {
+                sublayer.getSource().forEachFeature(function(f) {
+                    if(f.get('id') == 'waitingCheck'){
+                        actExiste=1;
+                    }
+                });
+            }
+        });
+    }
+    if(actExiste==0){
+        map.addInteraction(drawLine);
+        drawLine.on('drawend', function(e) {
+            addLine(e.feature);
+            generationWkt(e.feature, "insert");
+
+            map.removeInteraction(drawLine);
+        });
+    }
+    return false;
  });
 
-    var idCheck;
+//AO CLICAR NO BOTÃO EDIÇÃO
 $('#editLine').click(function(){
-    ClearInteractionLine();
+    clearInteraction();
     $(this).addClass('activeOptions');
     map.addInteraction(selectLine);
     map.addInteraction(modifyLine);
 
     selectLine.getFeatures().on('add', function(e) {
-        var features = e.element;
-        features.on('change', function(e) {
-                if(features.get('id')){
-                    idCheck = features.get('id');
-                    generationWktEditLine();
-                }else{
-                    generationWktLine();
-                }
+        var featSelect = e.element;
+        featSelect.on('change', function(e) {
+            generationWkt(featSelect, "edit");
         });
         $('.inserirDado').fadeOut();
         $('.editDado').fadeIn();
         $('.duplicDado').fadeOut();
         $('.delDado').fadeOut();
 
-        $(".editDado input").each(function(){
-            var colunmsName = $(this).attr('name');
-            if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
-                $('.editDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
-            }
-            if(colunmsName == 'camadas'){
-                var camadasSelect = features.get(colunmsName);
-                for(var i=1; i<=7; i++){
-                    var searchCam = i+',';
-                    if(camadasSelect.indexOf(searchCam) != -1){
-                        $('.editDado input[name="'+i+'"').prop("checked", true);
-                    }else{
-                        $('.editDado input[name="'+i+'"').prop("checked", false);
-                    }
-                }
-            }
-        });
-        var jsonAutor = $('#jsonAutor').text();
-        jsonAutor = JSON.parse(jsonAutor);
-
-        jsonAutor.forEach(function(resultado) {
-            if(resultado.id == features.get('rep_id')){
-                $('.editDado input[name="autor"]').val(resultado.name);
-            }
-        });
+        getAttribs(featSelect);
     });
-
-    return false;
 });
 
+/*
 $('#duplicLine').click(function(){
     ClearInteractionLine();
     $(this).addClass('activeOptions');
@@ -307,17 +282,17 @@ $('#eraseLine').click(function(){
      });
     return false;
  });
-
+*/
  $('#panLine').click(function(){
-    ClearInteractionLine();
+    clearInteraction();
     $(this).addClass('activeOptions');
-
     return false;
  });
 
-map.addLayer(layerLine);
+/*
+//map.addLayer(layerLine);
 
- function ClearInteractionLine(){
+/* function ClearInteractionLine(){
         $("#lineOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(selectLine);
         map.removeInteraction(duplicLine);
@@ -361,3 +336,4 @@ function generationWktEditLine(){
     }
 }
 
+*/
