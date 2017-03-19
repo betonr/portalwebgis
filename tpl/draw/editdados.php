@@ -22,19 +22,20 @@
                     ?>
                     <label>
                         <span class="legend">&#10143; <?= $column_name; ?>:</span>
-                        <input type="text" name="<?= $column_name; ?>" placeholder="<?= $column_name; ?>">
+                        <input type="text" name="<?= $column_name; ?>" placeholder="<?= $column_name; ?>" class="inF">
                     </label>
                     <?php
                 }
             }
         ?>
-        <input type="checkbox" name="1" value="1" style="display: inline-block; width: 25px;">1930
-        <input type="checkbox" name="2" value="2" style="display: inline-block; width: 25px;">1920
-        <input type="checkbox" name="3" value="3" style="display: inline-block; width: 25px;">1910
-        <input type="checkbox" name="4" value="4" style="display: inline-block; width: 25px;">1900<br>
-        <input type="checkbox" name="5" value="5" style="display: inline-block; width: 25px;">1890
-        <input type="checkbox" name="6" value="6" style="display: inline-block; width: 25px;">1880
-        <input type="checkbox" name="7" value="7" style="display: inline-block; width: 25px;">1868
+
+        <input type="checkbox" name="1930" value="1930" style="display: inline-block; width: 25px;">1930
+        <input type="checkbox" name="1920" value="1920" style="display: inline-block; width: 25px;">1920
+        <input type="checkbox" name="1910" value="1910" style="display: inline-block; width: 25px;">1910
+        <input type="checkbox" name="1900" value="1900" style="display: inline-block; width: 25px;">1900<br>
+        <input type="checkbox" name="1890" value="1890" style="display: inline-block; width: 25px;">1890
+        <input type="checkbox" name="1880" value="1880" style="display: inline-block; width: 25px;">1880
+        <input type="checkbox" name="1870" value="1870" style="display: inline-block; width: 25px;">1868
         <div class="clear"></div>
 
         <label>

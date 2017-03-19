@@ -35,13 +35,13 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
                     $date = date("Y/m/d");
                     $PostData['camadas']='';
-                    for($j=1;$j<8;$j++){
+                    for($j=1930;$j>=1870;$j-=10){
                         if(isset($PostData[$j]) && !empty($PostData[$j])){
                             $PostData['camadas'] .= $PostData[$j].', ';
                         }
                     }
                     $sqlkeys = "INSERT INTO {$PostData['map']} (geom, rep_id, datemod, camadas";
-                    $sqlvalues = " VALUES (st_GeomFromText('{$PostData['geom']}', 4326), {$PostData['responsavel']}, '{$date}', '{$PostData['camadas']}'";
+                    $sqlvalues = " VALUES (st_GeomFromText('{$PostData['geom']}', 4326), {$PostData['rep_id']}, '{$date}', '{$PostData['camadas']}'";
 
                     $mapname = $PostData['map'];
                     $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
@@ -61,8 +61,16 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $sqlvalues .= ")";
                     $sql = $sqlkeys.$sqlvalues;
                     $result = pg_query($conn->getConn(), $sql);
+
+                    $sql = "SELECT * FROM {mapname}";
+                    $result = pg_query($conn->getConn(), $sql);
+                    $registro = pg_fetch_all($result)[0];
+                    $newID = $registro['id'];
+
                     if($result){
                         $jSON['trigger'] = AjaxErro('Data inserted successfully');
+                        $jSON['draw'] = 'insert';
+                        $jSON['drawId'] = $newID;
                         $jSON['clearInput'] = true;
                     }else{
                         $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
@@ -94,7 +102,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $date = date("Y/m/d");
                     $mapname = $PostData['map'];
                     $camadasSelect='';
-                    for($z=1;$z<8;$z++){
+                    for($z=1930;$z>=1870;$z-=10){
                         if(isset($PostData[$z])){
                             $camadasSelect .= $z.', ';
                         }
@@ -122,6 +130,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $result = pg_query($conn->getConn(), $sql);
                     if($result){
                         $jSON['trigger'] = AjaxErro('Data updated successfully');
+                        $jSON['draw'] = 'edit';
                         $jSON['none'] = true;
                     }else{
                         $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
