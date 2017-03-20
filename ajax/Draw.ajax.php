@@ -62,7 +62,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $sql = $sqlkeys.$sqlvalues;
                     $result = pg_query($conn->getConn(), $sql);
 
+<<<<<<< HEAD
                     $sql = "SELECT * FROM {$PostData['map']} ORDER BY id DESC limit 1";
+=======
+                    $sql = "SELECT * FROM {mapname}";
+>>>>>>> 91455dad418814ebb5e7592954ece4832d7c458d
                     $result = pg_query($conn->getConn(), $sql);
                     $registro = pg_fetch_all($result)[0];
                     $newID = $registro['id'];
