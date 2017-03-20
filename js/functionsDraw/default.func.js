@@ -1,9 +1,12 @@
 function clearInteraction(){
         $("#lineOptions").find("p").removeClass('activeOptions');
         //$("#poligonsOptions").find("p").removeClass('activeOptions');
-        map.getInteractions().forEach(function (interaction) {
-            map.removeInteraction(interaction);
-        });
+        map.removeInteraction(editLine);
+        map.removeInteraction(drawLine);
+        map.removeInteraction(duplicLine);
+        map.removeInteraction(modifyLine);
+        map.removeInteraction(eraseLine);
+
 }
 
 function generationWkt(e, type){

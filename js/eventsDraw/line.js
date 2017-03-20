@@ -16,7 +16,9 @@
 });
 
 //VARIAVEIS (OBJETOS) -> line - PARA A INTERAÇÃO COM O MAPA
-var selectLine = new ol.interaction.Select();
+var editLine = new ol.interaction.Select();
+var duplicLine = new ol.interaction.Select();
+var eraseLine = new ol.interaction.Select();
 var wkt = new ol.format.WKT();
 
 var drawLine = new ol.interaction.Draw({
@@ -25,7 +27,7 @@ var drawLine = new ol.interaction.Draw({
 });
 
 var modifyLine = new ol.interaction.Modify({
-    features: selectLine.getFeatures(),
+    features: editLine.getFeatures(),
     deleteCondition: function(event) {
         return ol.events.condition.shiftKeyOnly(event) && ol.events.condition.singleClick(event);
     }
@@ -68,66 +70,47 @@ var modifyLine = new ol.interaction.Modify({
 $('#editLine').click(function(){
     clearInteraction();
     $(this).addClass('activeOptions');
-    map.addInteraction(selectLine);
+    map.addInteraction(editLine);
     map.addInteraction(modifyLine);
 
-    selectLine.getFeatures().on('add', function(e) {
+    editLine.getFeatures().on('add', function(e) {
         var featSelect = e.element;
         featSelect.on('change', function(e) {
-            generationWkt(featSelect, "edit");
+            if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
+                generationWkt(featSelect, "edit");
+            }else{
+                generationWkt(featSelect, "insert");
+            }
         });
-        $('.inserirDado').fadeOut();
-        $('.editDado').fadeIn();
-        $('.duplicDado').fadeOut();
-        $('.delDado').fadeOut();
+        if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
+            $('.inserirDado').fadeOut();
+            $('.editDado').fadeIn();
+            $('.duplicDado').fadeOut();
+            $('.delDado').fadeOut();
 
-        getAttribs(featSelect);
+            getAttribs(featSelect, "editDado");
+        }
     });
 });
 
-/*
+//AO CLICAR NO BOTÃO PARA DUPLICAR FEATURE
 $('#duplicLine').click(function(){
-    ClearInteractionLine();
+    clearInteraction();
     $(this).addClass('activeOptions');
     map.addInteraction(duplicLine);
 
     duplicLine.getFeatures().on('add', function(e) {
-        var features = e.element;
         $('.inserirDado').fadeOut();
         $('.editDado').fadeOut();
         $('.duplicDado').fadeIn();
         $('.delDado').fadeOut();
-
-        $(".duplicDado input").each(function(){
-            var colunmsName = $(this).attr('name');
-            if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'map'){
-                $('.duplicDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
-            }
-            if(colunmsName == 'camadas'){
-                var camadasSelect = features.get(colunmsName);
-                for(var i=1; i<=7; i++){
-                    var searchCam = i+',';
-                    if(camadasSelect.indexOf(searchCam) != -1){
-                        $('.duplicDado input[name="'+i+'"').prop("checked", true);
-                    }else{
-                        $('.duplicDado input[name="'+i+'"').prop("checked", false);
-                    }
-                }
-            }
-        });
-        var jsonAutor = $('#jsonAutor').text();
-        jsonAutor = JSON.parse(jsonAutor);
-
-        jsonAutor.forEach(function(resultado) {
-            if(resultado.id == features.get('rep_id')){
-                $('.duplicDado input[name="autor"]').val(resultado.name);
-            }
-        });
+        getAttribs(e.element, "duplicDado");
     });
 
     return false;
 });
 
+/*
 $('#dividirLine').click(function(){
     ClearInteractionLine();
     $(this).addClass('activeOptions');
@@ -248,49 +231,29 @@ $('#dividirLine').click(function(){
 
     return false;
 });
-
+*/
 $('#eraseLine').click(function(){
-    ClearInteractionLine();
+    clearInteraction();
     $(this).addClass('activeOptions');
     map.addInteraction(eraseLine);
 
     eraseLine.getFeatures().on('change:length', function(e) {
         if(e.target.getArray().length !== 0){
             eraseLine.getFeatures().on('add', function(f) {
-                var features = f.element;
-
-                var Prevent = $(this);
-                var DelId = features.get('id');
-                var tabName = features.get('tabName');
-                var Callback = 'Draw';
-                var Callback_action = 'draw_delete';
-                $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
-
-                    if (data.trigger) {
-                        if (bases instanceof ol.layer.Group){
-                            bases.getLayers().forEach(function(sublayer){
-                                if (sublayer.get('name') == 'mapAtual') {
-                                    sublayer.getSource().removeFeature(e.target.item(0));
-                                }
-                            });
-                        }
-                    }
-                    }, 'json');
+                excluiFeature(f.element);
                 });
             }
-
      });
     return false;
- });
-*/
- $('#panLine').click(function(){
+});
+
+$('#panLine').click(function(){
     clearInteraction();
     $(this).addClass('activeOptions');
     return false;
- });
+});
 
 /*
-//map.addLayer(layerLine);
 
 /* function ClearInteractionLine(){
         $("#lineOptions").find("p").removeClass('activeOptions');

@@ -48,10 +48,12 @@ $(function() {
                     //DRAW SUCESSO (preenchendo feature com os dados)
                     if (data.draw){
                         if(data.draw=='insert'){
-                            preencheFeature(data.drawId);
-                        }else if(data.draw == 'edit'){
-                            atualizaFeature(2);
-                            console.log(data.drawId);
+                            preencheFeature(data.drawId, "inserirDado");
+                        }else if(data.draw=='edit'){
+                            atualizaFeature(data.drawId);
+                        }else if(data.draw=='duplic'){
+                            cloneLine(data.drawIdAnt, data.drawId);
+                            preencheFeature(data.drawId, "duplicDado");
                         }
                     }
 

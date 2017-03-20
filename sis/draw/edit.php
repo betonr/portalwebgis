@@ -73,7 +73,7 @@ endif;
               return $result;
             }
             while ($row = pg_fetch_assoc($result)) {
-                $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"tabName":"'.$name.'",';
+                $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"map":"'.$name.'",';
                 $props = '';
                 $id    = '';
                 foreach ($row as $key => $val) {

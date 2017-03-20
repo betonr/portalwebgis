@@ -131,6 +131,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     if($result){
                         $jSON['trigger'] = AjaxErro('Data updated successfully');
                         $jSON['draw'] = 'edit';
+                        $jSON['drawId'] = $PostData['id'];
                         $jSON['none'] = true;
                     }else{
                         $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
@@ -181,8 +182,17 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $sql = $sqlkeys.$sqlvalues;
 
                     $result = pg_query($conn->getConn(), $sql);
+
+                    $sql = "SELECT * FROM {$PostData['map']} ORDER BY id DESC limit 1";
+                    $result = pg_query($conn->getConn(), $sql);
+                    $registro = pg_fetch_all($result)[0];
+                    $newID = $registro['id'];
+
                     if($result){
                         $jSON['trigger'] = AjaxErro('Data updated successfully');
+                        $jSON['draw'] = 'duplic';
+                        $jSON['drawIdAnt'] = $PostData['id'];
+                        $jSON['drawId'] = $newID;
                         //$jSON['none'] = true;
                     }else{
                         $jSON['trigger'] = AjaxErro('Error: verifique seus dados, não é possível utilizar aspas.', E_USER_ERROR);

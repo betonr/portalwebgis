@@ -1,4 +1,4 @@
-//ADICIONA A FEATURE NA LAYER DO MAPA
+//ADICIONA A FEATURE NO LAYER DO MAPA
 function addLine(feature){
     feature.setProperties({
         'id': 'waitingCheck'
@@ -13,26 +13,44 @@ function addLine(feature){
     }
 }
 
+//DUPLICA A FEATURE NO LAYER DO MAPA
+function cloneLine(idAnt, id){
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'mapAtual') {
+                sublayer.getSource().forEachFeature(function(f) {
+                    if(f.get('id') == idAnt){
+                        var cloneFeature = f.clone();
+                        cloneFeature.setId(id);
+                        cloneFeature.set('id', id, true);
+                        sublayer.getSource().addFeatures(cloneFeature);
+                    }
+                });
+            }
+        });
+    }
+}
+
 //PREENCHE A FEATURE COM OS ATRIBUTOS DIGITADOS PELO USUÁRIO
-function preencheFeature(id){
+function preencheFeature(id, type){
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'mapAtual') {
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == 'waitingCheck'){
                         f.set('id', id, true);
+                        f.setId(id);
 
-                        $(".inserirDado input.inF").each(function(){
+                        $("."+type+" input.inF").each(function(){
                             var colunmsName = $(this).attr('name');
-                            var inputAtual = $('.inserirDado input[name="'+colunmsName+'"').val();
+                            var inputAtual = $('.'+type+' input[name="'+colunmsName+'"').val();
                             f.set(colunmsName, inputAtual, true);
                         });
 
                         var inputCamadas = '';
-                        $(".inserirDado input[type='checkbox']:checked").each(function(){
+                        $("."+type+" input[type='checkbox']:checked").each(function(){
                             var colunmsName = $(this).attr('name');
-
-                                    inputCamadas+=colunmsName+", ";
+                            inputCamadas+=colunmsName+", ";
                         });
                         f.set('camadas', inputCamadas, true);
 
@@ -45,21 +63,21 @@ function preencheFeature(id){
 }
 
 //MOSTRA OS ATRIBUTOS DA FEATURE NO FORMULARIO DE EDIÇÃO
-function getAttribs(feature){
-    $(".editDado input").each(function(){
+function getAttribs(feature, type){
+    $("."+type+" input").each(function(){
         var colunmsName = $(this).attr('name');
         if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
-            $('.editDado input[name="'+colunmsName+'"').val(feature.get(colunmsName));
+            $('.'+type+' input[name="'+colunmsName+'"').val(feature.get(colunmsName));
         }
         if(colunmsName == 'camadas'){
             var camadasSelect = feature.get(colunmsName);
             for(var i=1930; i>=1870; i-=10){
                 var searchCam = i+',';
                 if(camadasSelect.indexOf(searchCam) != -1){
-                    $('.editDado input[name="'+i+'"').prop("checked", true);
+                    $('.'+type+' input[name="'+i+'"').prop("checked", true);
 
                 }else{
-                    $('.editDado input[name="'+i+'"').prop("checked", false);
+                    $('.'+type+' input[name="'+i+'"').prop("checked", false);
                 }
             }
         }
@@ -69,23 +87,22 @@ function getAttribs(feature){
 
     jsonAutor.forEach(function(resultado) {
         if(resultado.id == feature.get('rep_id')){
-            $('.editDado input[name="autor"]').val(resultado.name);
+            $('.'+type+' input[name="autor"]').val(resultado.name);
         }
     });
 }
 
 //ATUALIZA OS ATRIBUTOS DA FEATURE DE ACORDO COM O QUE FOI DIGITADO PELO USUÁRIO
-function atualizaFeature (){
+function atualizaFeature(idFeature){
      if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'mapAtual') {
                 sublayer.getSource().forEachFeature(function(f) {
-                    var idFeature = $(".editDado input[name='id']");
                     if(f.get('id') == idFeature){
 
                         $(".editDado input.inF").each(function(){
                             var colunmsName = $(this).attr('name');
-                            var inputAtual = $('.inserirDado input[name="'+colunmsName+'"').val();
+                            var inputAtual = $('.editDado input[name="'+colunmsName+'"').val();
                             f.set(colunmsName, inputAtual, true);
                         });
 
@@ -102,4 +119,25 @@ function atualizaFeature (){
             }
         });
     }
+}
+
+//EXCLUI A FEATURE SELECIONADA DO 'LAYERS ATUAL' NO MAPA
+function excluiFeature(feature){
+    var DelId = feature.get('id');
+    var tabName = feature.get('map');
+    var Callback = 'Draw';
+    var Callback_action = 'draw_delete';
+    $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
+
+        if (data.trigger) {
+            if (bases instanceof ol.layer.Group){
+                bases.getLayers().forEach(function(sublayer){
+                    if (sublayer.get('name') == 'mapAtual'){
+                        sublayer.getSource().removeFeature(feature);
+                    }
+                });
+            }
+        }
+
+    }, 'json');
 }
