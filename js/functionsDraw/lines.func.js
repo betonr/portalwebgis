@@ -33,11 +33,6 @@ function preencheFeature(id){
                             var colunmsName = $(this).attr('name');
 
                                     inputCamadas+=colunmsName+", ";
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 91455dad418814ebb5e7592954ece4832d7c458d
                         });
                         f.set('camadas', inputCamadas, true);
 
