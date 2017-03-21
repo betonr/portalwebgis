@@ -53,7 +53,13 @@ endif;
             }
 
             //CONCLUSÃO DA CONSTRUÇÃO DO SQL DOS DADOS GEOGRAFICOS, COM BASE NO TIPO DE DADO A SER CADASTRADO
-            $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
+            if($type=='Point'){
+                $sqljson .= ", st_asgeojson(st_transform(geom,3857)) AS geojson FROM {$name}";
+            }elseif($type=='Linestring'){
+                $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
+            }elseif($type=='Polygon'){
+                $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
+            }
 
             $result = pg_query($Conn->getConn(), $sqljson);
 
