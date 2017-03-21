@@ -93,7 +93,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }
             break;
 
-            /* EDIÇÃO dOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
+            /* EDIÇÃO DOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
             * case responsável por editar os dados espaciais na tabela
             */
             case 'draw_editar':

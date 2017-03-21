@@ -53,13 +53,7 @@ endif;
             }
 
             //CONCLUSÃO DA CONSTRUÇÃO DO SQL DOS DADOS GEOGRAFICOS, COM BASE NO TIPO DE DADO A SER CADASTRADO
-            if($type=='Point'){
-                $sqljson .= ", st_asgeojson(st_transform(geom,3857)) AS geojson FROM {$name}";
-            }elseif($type=='Linestring'){
-                $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
-            }elseif($type=='Polygon'){
-                $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
-            }
+            $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
 
             $result = pg_query($Conn->getConn(), $sqljson);
 
@@ -124,11 +118,6 @@ endif;
     <?php
         if($type=='Point'){ ?>
         <div id="pointsOptions" class="toobar">
-            <form name="coordenadas" action="" method="post">
-                <input type="text" name="latitude" placeholder="latitude"/>
-                <input type="text" name="longitude" placeholder="longitude"/>
-                <button name="localizar" id="localizar" class="localizar">&#10004;</button>
-            </form>
             <p class="btn" id="panPoint">[ ]</p>
             <p class="btn" id="drawPoint">Desenhar</p>
             <p class="btn" id="editPoint">Editar</p>

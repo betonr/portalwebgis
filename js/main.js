@@ -52,7 +52,7 @@ $(function() {
                         }else if(data.draw=='edit'){
                             atualizaFeature(data.drawId);
                         }else if(data.draw=='duplic'){
-                            cloneLine(data.drawIdAnt, data.drawId);
+                            cloneFeature(data.drawIdAnt, data.drawId);
                             preencheFeature(data.drawId, "duplicDado");
                         }
                     }

@@ -1,182 +1,104 @@
-    $('.points').click(function() {
-        if (!$(this).hasClass('active')) {
-            $('.line').removeClass('active');
-            $('#lineOptions').fadeOut();
-            $('.poligons').removeClass('active');
-            $('#poligonsOptions').fadeOut();
-            ClearInteractionLine();
-            ClearInteractionPoligons();
+$('.points').click(function() {
+    if (!$(this).hasClass('active')) {
+        $('.line').removeClass('active');
+        $('#lineOptions').fadeOut();
+        $('.poligons').removeClass('active');
+        $('#poligonsOptions').fadeOut();
+        clearInteraction('line');
+        clearInteraction('polygon');
 
-            $('.points').addClass('active');
-            $('#pointsOptions').fadeIn();
-        }else{
-            $('.points').removeClass('active');
-            $('#pointsOptions').fadeOut();
-        }
-    });
+        $('.points').addClass('active');
+        $('#pointsOptions').fadeIn();
+    }else{
+        $('.points').removeClass('active');
+        $('#pointsOptions').fadeOut();
+    }
+});
 
-    var drawPoints;
-    var sourcePoint = new ol.source.Vector();
-    var erasePoint = new ol.interaction.Select();
-    var selectPoint = new ol.interaction.Select();
-    var latitude = $("[name='latitude']");
-    var longitude = $("[name='longitude']");
-    var wktpoint = $(".draw_form input[name='geom']");
 
-    var layerPoints = new ol.layer.Vector({
-        source: sourcePoint,
-        visible: true,
-        name: 'points'
-    });
+//VARIAVEIS (OBJETOS) -> line - PARA A INTERAÇÃO COM O MAPA
+var erasePoint = new ol.interaction.Select();
+var editPoint = new ol.interaction.Select();
+var wkt = new ol.format.WKT();
 
-    //if (bases instanceof ol.layer.Group){
-        map.addLayer(layerPoints);
-    //}
+var drawPoints  = new ol.interaction.Draw({
+    source: vectorSourceAtual,
+    type: 'Point'
+});
 
-    $('#localizar').click(function(){
-        var lat = latitude.val();
-        var long = longitude.val();
+//AO CLICAR NO BOTÃO [ ]
+$('#panPoint').click(function(){
+    clearInteraction('points');
+    $(this).addClass('activeOptions');
 
-        if(lat != '' && long != ''){
-            sourcePoint.clear();
-            sourcePoint.addFeature(
-                new ol.Feature({
-                    geometry: new ol.geom.Point([parseFloat(long), parseFloat(lat)]).transform('EPSG:4326', 'EPSG:3857')
-                })
-             );
+    return false;
+});
 
-            wktpoint.val('POINT(' + long + ' ' + lat + ')');
-            map.getView().fitExtent(sourcePoint.getExtent(), map.getSize());
-            $('.inserirDado').fadeIn();
-            $('.editDado').fadeOut();
-            $('.delDado').fadeOut();
-        }
+//AO CLICAR NO BOTÃO DE DESENHAR
+$('#drawPoint').click(function(){
+    clearInteraction('points');
+    $(this).addClass('activeOptions');
+    $('.inserirDado').fadeIn();
+    $('.editDado').fadeOut();
+    $('.duplicDado').fadeOut();
+    $('.delDado').fadeOut();
 
-        return false;
-    })
-
-    $('#panPoint').click(function(){
-        ClearInteractionPoints();
-        $(this).addClass('activeOptions');
-
-        return false;
-    });
-
-    $('#drawPoint').click(function(){
-        ClearInteractionPoints();
-        $(this).addClass('activeOptions');
-
-        drawPoints  = new ol.interaction.Draw({
-            source: sourcePoint,
-            type: 'Point'
-        });
-        map.addInteraction(drawPoints);
-        drawPoints.on('drawend', function(d){
-            var feature = d.feature;
-            sourcePoint.clear();
-            sourcePoint.addFeature(feature);
-            var latLong = feature.getGeometry().getCoordinates();
-
-            generationCoordsPoint(feature);
-            $('.inserirDado').fadeIn();
-            $('.editDado').fadeOut();
-            $('.delDado').fadeOut();
-        });
-
-        return false;
-    });
-
-    $('#editPoint').click(function(){
-        ClearInteractionPoints();
-        $(this).addClass('activeOptions');
-        map.addInteraction(selectPoint);
-
-        selectPoint.getFeatures().on('add', function(e) {
-            var features = e.element;
-            $('.inserirDado').fadeOut();
-            $('.editDado').fadeIn();
-            $('.delDado').fadeOut();
-            sourcePoint.clear();
-            $('.editDado input[name="geom"').val('');
-
-            $(".editDado input").each(function(){
-                var colunmsName = $(this).attr('name');
-                if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'responsavel' && colunmsName != 'geom' && colunmsName != 'map'){
-                    $('.editDado input[name="'+colunmsName+'"').val(features.get(colunmsName));
-                }
-                if(colunmsName == 'camadas'){
-                var camadasSelect = features.get(colunmsName);
-                    for(var i=1; i<=7; i++){
-                        var searchCam = i+',';
-                        if(camadasSelect.indexOf(searchCam) != -1){
-                            $('.editDado input[name="'+i+'"').prop("checked", true);
-                        }else{
-                            $('.editDado input[name="'+i+'"').prop("checked", false);
-                        }
+    var actExiste = 0;
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'mapAtual') {
+                sublayer.getSource().forEachFeature(function(f) {
+                    if(f.get('id') == 'waitingCheck'){
+                        actExiste=1;
                     }
-                }
-            });
-
-            var jsonAutor = $('#jsonAutor').text();
-            jsonAutor = JSON.parse(jsonAutor);
-
-            jsonAutor.forEach(function(resultado) {
-                if(resultado.id == features.get('rep_id')){
-                    $('.editDado input[name="autor"]').val(resultado.name);
-                }
-            });
-        });
-        return false;
-     });
-
-
-    $('#erasePoint').click(function(){
-        ClearInteractionPoints();
-        $(this).addClass('activeOptions');
-        map.addInteraction(erasePoint);
-
-        erasePoint.getFeatures().on('change:length', function(e) {
-        if(e.target.getArray().length !== 0){
-            erasePoint.getFeatures().on('add', function(f) {
-                var features = f.element;
-
-                var Prevent = $(this);
-                var DelId = features.get('id');
-                var tabName = features.get('tabName');
-                var Callback = 'Draw';
-                var Callback_action = 'draw_delete';
-                $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
-
-                    if (data.trigger) {
-                        if (bases instanceof ol.layer.Group){
-                            bases.getLayers().forEach(function(sublayer){
-                                if (sublayer.get('name') == 'mapAtual') {
-                                    sublayer.getSource().removeFeature(e.target.item(0));
-                                }
-                            });
-                        }
-                    }
-                    }, 'json');
                 });
             }
+        });
+    }
+    if(actExiste==0){
+        map.addInteraction(drawPoints);
+        drawPoints.on('drawend', function(e) {
+            addFeature(e.feature);
+            generationWkt(e.feature, "insert");
 
-     });
+            map.removeInteraction(drawPoints);
+        });
+    }
+    return false;
 
-        return false;
+});
+
+//AO CLICAR NO BOTÃO EDIÇÃO
+$('#editPoint').click(function(){
+    clearInteraction('points');
+    $(this).addClass('activeOptions');
+    map.addInteraction(editPoint);
+
+    editPoint.getFeatures().on('add', function(e) {
+        var featSelect = e.element;
+        if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
+            $('.inserirDado').fadeOut();
+            $('.editDado').fadeIn();
+            $('.duplicDado').fadeOut();
+            $('.delDado').fadeOut();
+
+            getAttribs(featSelect, "editDado");
+        }
     });
+});
 
-    function ClearInteractionPoints(){
-        $("#pointsOptions").find("p").removeClass('activeOptions');
-        map.removeInteraction(drawPoints);
-        map.removeInteraction(erasePoint);
-        map.removeInteraction(selectPoint);
-    }
+//AO CLICAR NO BOTÃO DE EXCLUSÃO
+$('#erasePoint').click(function(){
+    clearInteraction('points');
+    $(this).addClass('activeOptions');
+    map.addInteraction(erasePoint);
 
-    function generationCoordsPoint(f){
-        var coords = ol.proj.transform(f.getGeometry().getCoordinates(), 'EPSG:3857', 'EPSG:4326');
-        longitude.val(coords[0]);
-        latitude.val(coords[1]);
-
-        wktpoint.val('POINT(' + coords[0] + ' ' + coords[1] + ')');
-        return false;
-    }
+    erasePoint.getFeatures().on('change:length', function(e) {
+        if(e.target.getArray().length !== 0){
+            erasePoint.getFeatures().on('add', function(f) {
+                excluiFeature(f.element);
+                });
+            }
+     });
+    return false;
+});
