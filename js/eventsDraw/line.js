@@ -104,8 +104,8 @@ $('#duplicLine').click(function(){
         var featSelect = e.element;
         if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
             $('.inserirDado').fadeOut();
-            $('.editDado').fadeIn();
-            $('.duplicDado').fadeOut();
+            $('.editDado').fadeOut();
+            $('.duplicDado').fadeIn();
             $('.delDado').fadeOut();
 
             getAttribs(featSelect, "duplicDado");

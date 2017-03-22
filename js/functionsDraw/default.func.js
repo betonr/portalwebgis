@@ -163,20 +163,30 @@ function atualizaFeature(idFeature){
 //EXCLUI A FEATURE SELECIONADA DO 'LAYERS ATUAL' NO MAPA
 function excluiFeature(feature){
     var DelId = feature.get('id');
-    var tabName = feature.get('map');
-    var Callback = 'Draw';
-    var Callback_action = 'draw_delete';
-    $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
-
-        if (data.trigger) {
-            if (bases instanceof ol.layer.Group){
-                bases.getLayers().forEach(function(sublayer){
-                    if (sublayer.get('name') == 'mapAtual'){
-                        sublayer.getSource().removeFeature(feature);
-                    }
-                });
-            }
+    if(DelId=='waitingCheck'){
+        if (bases instanceof ol.layer.Group){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.get('name') == 'mapAtual'){
+                    sublayer.getSource().removeFeature(feature);
+                }
+            });
         }
+    }else{
+        var tabName = feature.get('map');
+        var Callback = 'Draw';
+        var Callback_action = 'draw_delete';
+        $.post('ajax/' + Callback + '.ajax.php', {callback: Callback, callback_action: Callback_action, del_id: DelId, tb_name: tabName}, function (data) {
 
-    }, 'json');
+            if (data.trigger) {
+                if (bases instanceof ol.layer.Group){
+                    bases.getLayers().forEach(function(sublayer){
+                        if (sublayer.get('name') == 'mapAtual'){
+                            sublayer.getSource().removeFeature(feature);
+                        }
+                    });
+                }
+            }
+
+        }, 'json');
+    }
 }
