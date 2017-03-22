@@ -8,14 +8,18 @@ endif;
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
 <script src="js/ol3/ol-debug.js"></script>
 
-<script src="js/maps/online.js" defer></script>
-<script src="js/maps/nativo.js" defer></script>
+<script src="js/layersMaps/online.js" defer></script>
+<script src="js/layersMaps/nativo.js" defer></script>
 
 <script src="js/map.js" defer></script>
+<script src="js/eventsDraw/default.js" defer></script>
 
-<script src="js/draw/points.js" defer></script>
-<script src="js/draw/line.js" defer></script>
-<script src="js/draw/poligons.js" defer></script>
+<script src="js/eventsDraw/points.js" defer></script>
+<script src="js/eventsDraw/line.js" defer></script>
+<script src="js/eventsDraw/poligons.js" defer></script>
+
+<script src="js/functionsDraw/default.func.js" defer></script>
+<script src="js/functionsDraw/lines.func.js" defer></script>
 
 <section class="mapedit" id="mapafixo">
 <?php
@@ -49,13 +53,8 @@ endif;
             }
 
             //CONCLUSÃO DA CONSTRUÇÃO DO SQL DOS DADOS GEOGRAFICOS, COM BASE NO TIPO DE DADO A SER CADASTRADO
-            if($type=='Point'){
-                $sqljson .= ", st_asgeojson(st_transform(geom,3857)) AS geojson FROM {$name}";
-            }elseif($type=='Linestring'){
-                $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
-            }elseif($type=='Polygon'){
-                $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
-            }
+            $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
+
 
             $result = pg_query($Conn->getConn(), $sqljson);
 
@@ -69,7 +68,7 @@ endif;
               return $result;
             }
             while ($row = pg_fetch_assoc($result)) {
-                $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"tabName":"'.$name.'",';
+                $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"map":"'.$name.'",';
                 $props = '';
                 $id    = '';
                 foreach ($row as $key => $val) {
@@ -120,11 +119,6 @@ endif;
     <?php
         if($type=='Point'){ ?>
         <div id="pointsOptions" class="toobar">
-            <form name="coordenadas" action="" method="post">
-                <input type="text" name="latitude" placeholder="latitude"/>
-                <input type="text" name="longitude" placeholder="longitude"/>
-                <button name="localizar" id="localizar" class="localizar">&#10004;</button>
-            </form>
             <p class="btn" id="panPoint">[ ]</p>
             <p class="btn" id="drawPoint">Desenhar</p>
             <p class="btn" id="editPoint">Editar</p>

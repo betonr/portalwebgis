@@ -80,11 +80,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $MapSelect = pg_fetch_all($result)[0];
                     extract($MapSelect);
                     $description = Modify::remCaracter($description);
-                    if($type == 'Point'){
-                        $projectSrs = 4326;
-                    }else{
-                        $projectSrs = 3857;
-                    }
+                    $projectSrs = 3857;
 
                     $Geoserver = new Wrapper('http://localhost:8080/geoserver/', 'admin', 'geoserver');
                     $Geoserver->createLayer($name, 'pauliceia', 'Postgis', $projectSrs, $description);
