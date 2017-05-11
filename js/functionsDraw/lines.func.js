@@ -1,4 +1,4 @@
-//RETIRA AS INTERAÇÕES DOS MAPAS
+//DIVIDE A LAYERS SELECIONADA, NO PONTO ESCOLHIDO
 function divLine(fOriginal, fCorte){
     var wktdiv = new ol.format.WKT();
     var coordsdiv = fCorte.getGeometry().getCoordinates();

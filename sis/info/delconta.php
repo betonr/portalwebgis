@@ -18,7 +18,7 @@ if($Admin['level']>1){
 <section class="create_content">
     <div class="content">
 
-        <h1>Excluir Sua Conta no Pauliceia</h1>
+        <h1>Excluir Sua Conta </h1>
         <form action="" name="create_form" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="callback" value="Users">

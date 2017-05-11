@@ -9,7 +9,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:municipios', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:municipios', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: true,
@@ -18,7 +18,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:distritos', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:distritos', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: true,
@@ -27,7 +27,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1930', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1930', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -36,7 +36,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1920', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1920', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -45,7 +45,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1910', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1910', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -54,7 +54,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1900', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1900', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -63,7 +63,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1890', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1890', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -72,7 +72,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1880', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1880', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -81,7 +81,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia:1868', 'TILED': true},
+                    params: {'LAYERS': 'portalweb:1868', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,
@@ -90,7 +90,7 @@
             new ol.layer.Tile({
                 source: new ol.source.TileWMS({
                     url: 'http://localhost:8080/geoserver/ows',
-                    params: {'LAYERS': 'pauliceia: none', 'TILED': true},
+                    params: {'LAYERS': 'portalweb: none', 'TILED': true},
                     serverType: 'geoserver'
                 }),
                 visible: false,

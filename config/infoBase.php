@@ -11,15 +11,15 @@
 define('P_HOST', 'localhost'); //host
 define('P_PORT', '5432'); //Port
 define('P_USER', 'postgres'); //Usuário
-define('P_PASS', 'root'); //Senha
-define('P_DBSA', 'db_pauliceia'); //nome da Base de Dados
+define('P_PASS', ''); //Senha
+define('P_DBSA', 'db_portalweb'); //nome da Base de Dados
 
 /*
  * INFORMAÇÕES DO PORTAL
  */
-define('BASE', 'http://localhost/pauliceia/');
-define('P_NAME', 'Pauliceia 2.0');
-define('P_DESC', 'Portal WEBGIS com informações históricas da cidade de São Paulo');
+define('BASE', 'http://localhost/portalwebgis/');
+define('P_NAME', 'Portal web-gis');
+define('P_DESC', 'Portal WEBGIS, edição visualização de conteúdo geográfico');
 
 /*
  * AUTO LOAD DE CLASSES

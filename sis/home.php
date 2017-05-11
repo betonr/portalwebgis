@@ -10,17 +10,17 @@ endif;
             <?php if($Admin['level'] == 2){ ?>
                 <article class="box box3">
                     <img src="images/icons/maps.png" alt="[maps config]" title="maps config"/>
-                    <center><a href="dashboard.php?p=create/create" title="criar mapas pauliceia" class="green icon-folder-open">Configurar Mapas</a></center>
+                    <center><a href="dashboard.php?p=create/create" title="criar mapas  " class="green icon-folder-open">Configurar Mapas</a></center>
                 </article>
                 <article class="box box3">
                     <img src="images/icons/Maps1.png" alt="[map publish]" title="map publish"/>
-                    <center><a href="dashboard.php?p=publish/home" title="publicar mapas pauliceia" class="blue icon-laptop">Publicar Mapas</a></center>
+                    <center><a href="dashboard.php?p=publish/home" title="publicar mapas  " class="blue icon-laptop">Publicar Mapas</a></center>
                 </article>
 
             <?php } if($Admin['level']==1 || $Admin['level']==2){ ?>
             <article class="box box3">
                 <img src="images/icons/maps2.png" alt="[maps draw]" title="maps draw"/>
-                <center><a href="dashboard.php?p=draw/home" title="criar mapas pauliceia" class="red icon-pencil">Desenhar Mapas</a></center>
+                <center><a href="dashboard.php?p=draw/home" title="criar mapas  " class="red icon-pencil">Desenhar Mapas</a></center>
             </article>
             <?php } ?>
 
@@ -45,12 +45,12 @@ endif;
             <article class="box box3">
                 <?php if($Admin['level']==3){ ?>
                     <img src="images/icons/delUser.png" alt="[del user]" title="del user"/>
-                    <center><a href="dashboard.php?p=info/delresp" title="excluir usuários pauliceia" class="green  icon-warning">Excluir Responsável</a></center>
+                    <center><a href="dashboard.php?p=info/delresp" title="excluir usuários  " class="green  icon-warning">Excluir Responsável</a></center>
                 <?php }elseif($Admin['level']==2){ ?>
-                    <center><a href="dashboard.php?p=info/delcolaborador" title="excluir usuários Colaborador pauliceia" class="green  icon-warning">Excluir Colaborador</a></center>
+                    <center><a href="dashboard.php?p=info/delcolaborador" title="excluir usuários Colaborador  " class="green  icon-warning">Excluir Colaborador</a></center>
                 <?php }elseif($Admin['level']==1){ ?>
                      <img src="images/icons/delUser.png" alt="[del user]" title="del user"/>
-                     <center><a href="dashboard.php?p=info/delconta" title="excluir usuários pauliceia" class="green  icon-warning">Excluir Conta</a></center>
+                     <center><a href="dashboard.php?p=info/delconta" title="excluir usuários  " class="green  icon-warning">Excluir Conta</a></center>
                 <?php } ?>
             </article>
 

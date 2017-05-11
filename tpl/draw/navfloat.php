@@ -1,6 +1,6 @@
 <?php
             $service = "http://localhost:8080/geoserver/"; //url do geoserver
-            $request = "rest/workspaces/pauliceia/datastores/Postgis"; // Local dos workspaces
+            $request = "rest/workspaces/portalweb/datastores/Postgis"; // Local dos workspaces
             $url = $service . $request;
             $ch = curl_init($url);
 

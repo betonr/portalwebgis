@@ -47,7 +47,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         extract($MapSelect);
 
                         $Geoserver = new Wrapper('http://localhost:8080/geoserver/', 'admin', 'geoserver');
-                        $Geoserver->deleteLayer($name, 'pauliceia', 'Postgis');
+                        $Geoserver->deleteLayer($name, 'portalweb', 'Postgis');
 
                         $sql = "UPDATE tb_maps SET status=0 WHERE id={$PostData['del_id']}";
                         $result = pg_query($conn->getConn(), $sql);
@@ -83,7 +83,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $projectSrs = 3857;
 
                     $Geoserver = new Wrapper('http://localhost:8080/geoserver/', 'admin', 'geoserver');
-                    $Geoserver->createLayer($name, 'pauliceia', 'Postgis', $projectSrs, $description);
+                    $Geoserver->createLayer($name, 'portalweb', 'Postgis', $projectSrs, $description);
 
                     $sql = "UPDATE tb_maps SET status=1 WHERE id={$PostData['del_id']}";
                     $result = pg_query($conn->getConn(), $sql);

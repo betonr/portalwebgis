@@ -8,6 +8,8 @@ endif;
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
 <script src="js/ol3/ol-debug.js"></script>
 
+<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js"></script>
+
 <script src="js/layersMaps/online.js" defer></script>
 <script src="js/layersMaps/nativo.js" defer></script>
 
@@ -68,7 +70,7 @@ endif;
               return $result;
             }
             while ($row = pg_fetch_assoc($result)) {
-                $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"map":"'.$name.'",';
+                $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"tabName":"'.$name.'",';
                 $props = '';
                 $id    = '';
                 foreach ($row as $key => $val) {
@@ -89,78 +91,91 @@ endif;
     <p id="jsonMap" style="display: none;"><?= $output; ?></p>
     <div class="top">
 
+   <!--- btn MENU COM AS LAYERS -->
     <?php require 'tpl/draw/navfloat.php'; ?>
 
     <?php require 'tpl/draw/navfixed.php'; ?>
+    <!--- fim MENU  -->
 
-    <!--- btn AÇÕES DESENHO -->
-    <div class="functionsType">
-    <span style="color: #3366FF; font-size: 2em; font-weight: 600;padding-left: 4px; text-shadow: 1px 1px 1px #333;">&#9997;</span>
-    <?php
-        if($type=='Point'){
-            echo "<a class='btn points'>&#10687;</a>";
-        }elseif($type=='Linestring'){
-            echo "<a class='btn line'>&#9761;</a>";
-        }elseif($type=='Polygon'){
-            echo "<a class='btn poligons'>&#9640;</a>";
-        }
-    ?>
-    </div>
-    <!--- fim AÇÕES -->
+    <!--- ### BOTÕES LATEAIS ### -->
+        <!--- btn SEARCH -->
+        <div class="search_btn">
+            <a class='btn icon-notext icon-search'></a>
+        </div>
+        <!--- fim SEARCH -->
 
-    <!--- btn RECARREGAMENTO de PÁGINA -->
-    <div class="recarregamento">
-        <a class='btn recEditado'>&#8635;</a>
-        <a class='btn recDefault'>&#10008;</a>
-    </div>
-    <!--- fim RECARREGAMENTO -->
+        <!--- btn AÇÕES DESENHO -->
+        <div class="typeGeom_btn">
+        <span style="color: #3366FF; font-size: 2em; font-weight: 600;padding-left: 4px; text-shadow: 1px 1px 1px #333;">&#9997;</span>
+        <?php
+            if($type=='Point'){
+                echo "<a class='btn points'>&#10687;</a>";
+            }elseif($type=='Linestring'){
+                echo "<a class='btn line'>&#9761;</a>";
+            }elseif($type=='Polygon'){
+                echo "<a class='btn poligons'>&#9640;</a>";
+            }
+        ?>
+        </div>
+        <!--- fim AÇÕES -->
+
+        <!--- btn RECARREGAMENTO de PÁGINA -->
+        <div class="recarregamento">
+            <a class='btn recEditado'>&#8635;</a>
+            <a class='btn recDefault'>&#10008;</a>
+        </div>
+        <!--- fim RECARREGAMENTO -->
+    <!--- ### FIM BOTÕES ### -->
 
     <!--- TOOBAR dos Desenhos -->
     <?php
-        if($type=='Point'){ ?>
-        <div id="pointsOptions" class="toobar">
-            <p class="btn" id="panPoint">[ ]</p>
-            <p class="btn" id="drawPoint">Desenhar</p>
-            <p class="btn" id="editPoint">Editar</p>
-            <p class="btn" id="erasePoint">Apagar</p>
-        </div>
-        <?php }elseif($type=='Linestring'){ ?>
-        <div id="lineOptions" class="toobar">
-            <p class="btn" id="panLine">[ ]</p>
-            <p class="btn" id="drawLine">Desenhar</p>
-            <p class="btn" id="editLine">Editar</p>
-            <p class="btn" id="duplicLine">Duplicar</p>
-            <p class="btn" id="dividirLine">Dividir</p>
-            <p class="btn" id="eraseLine">Apagar</p>
-        </div>
-        <?php }elseif($type=='Polygon'){ ?>
-        <div id="poligonsOptions" class="toobar">
-            <p class="btn" id="panPoligons">[ ]</p>
-            <p class="btn" id="drawPoligons">Desenhar</p>
-            <p class="btn" id="editPoligons">Editar</p>
-            <p class="btn" id="duplicPoligons">Duplicar</p>
-            <p class="btn" id="erasePoligons">Apagar</p>
-        </div>
-        <?php } ?>
-        <!---fim toobar -->
+    if($type=='Point'){ ?>
+    <div id="pointsOptions" class="toobar">
+        <p class="btn" id="panPoint">[ ]</p>
+        <p class="btn" id="drawPoint">Desenhar</p>
+        <p class="btn" id="editPoint">Editar</p>
+        <p class="btn" id="erasePoint">Apagar</p>
+    </div>
+    <?php }elseif($type=='Linestring'){ ?>
+    <div id="lineOptions" class="toobar">
+        <p class="btn" id="panLine">[ ]</p>
+        <p class="btn" id="drawLine">Desenhar</p>
+        <p class="btn" id="editLine">Editar</p>
+        <p class="btn" id="duplicLine">Duplicar</p>
+        <p class="btn" id="dividirLine">Dividir</p>
+        <p class="btn" id="eraseLine">Apagar</p>
+    </div>
+    <?php }elseif($type=='Polygon'){ ?>
+    <div id="poligonsOptions" class="toobar">
+        <p class="btn" id="panPoligons">[ ]</p>
+        <p class="btn" id="drawPoligons">Desenhar</p>
+        <p class="btn" id="editPoligons">Editar</p>
+        <p class="btn" id="duplicPoligons">Duplicar</p>
+        <p class="btn" id="erasePoligons">Apagar</p>
+    </div>
+    <?php } ?>
+    <!---fim toobar -->
 
-        <!--- FORMULARIO DE ENVIO DO DADO -->
-        <?php require 'tpl/draw/insertdados.php'; ?>
+    <!--- FORMULARIO DE ENVIO DO DADO -->
+    <?php require 'tpl/draw/insertdados.php'; ?>
 
-        <!--- FORMULARIO DE EDIÇÃO DO DADO -->
-        <?php require 'tpl/draw/editdados.php'; ?>
+    <!--- FORMULARIO DE EDIÇÃO DO DADO -->
+    <?php require 'tpl/draw/editdados.php'; ?>
 
-        <!--- FORMULARIO DE DUPLICAÇÃO DO DADO -->
-        <?php require 'tpl/draw/duplicdados.php'; ?>
+    <!--- FORMULARIO DE DUPLICAÇÃO DO DADO -->
+    <?php require 'tpl/draw/duplicdados.php'; ?>
 
-        <img src="images/logo.png" title="logo pauliceia">
-        <a href="dashboard.php?p=home" title="portal web pauliceia" class="icon-office btnbackMap">Voltar ao Menu</a>
+    <img src="images/logo.png" title="logo  ">
+    <a href="dashboard.php?p=home" title="portal web  " class="icon-office btnbackMap">Voltar ao Menu</a>
 
-        <!--- FORMULARIO DE EDIÇÃO DO DADO -->
-        <?php require 'tpl/draw/editStyle.php'; ?>
+    <!--- FORMULARIO DE EDIÇÃO DO DADO -->
+    <?php require 'tpl/draw/editStyle.php'; ?>
 
-        <!--- FORMULARIO PARA SELEÇÃO DE CAMADAS DA LAYERS ATUAL -->
-        <?php require 'tpl/draw/selectCamadas.php'; ?>
+    <!--- FORMULARIO PARA SELEÇÃO DE CAMADAS DA LAYERS ATUAL -->
+    <?php require 'tpl/draw/selectCamadas.php'; ?>
+
+    <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
+    <?php require 'tpl/draw/search.php'; ?>
 
     <?php }
     } ?>

@@ -68,7 +68,7 @@ $('.top input[type=checkbox]').click(function() {
 $('.top .selectMap').click(function() {
 	var postgisSelect = $("select[name='dbpostgis']").val();
 	$('.titleMapStyle').attr('title', postgisSelect);
-	var postgislayer = 'pauliceia:'+postgisSelect+'';
+	var postgislayer = 'portalweb:'+postgisSelect+'';
 
 	if (bases instanceof ol.layer.Group){
 		bases.getLayers().forEach(function(sublayer){
@@ -153,7 +153,7 @@ $('.selectCamadas .actSelectC').click(function () {
                                 			sublayer.getSource().getFeatures().forEach( function(feat){
                                 			var visibleStyle = sublayer.getStyle();
                                 			var actSelect = 0;
-                                    			for(var i=1; i<8; i++){
+                                    			for(var i=1930; i>=1870; i-=10){
                                     				if($('.selectCamadas input[value="'+i+'"]').is(":checked") == true){
                                     					var cam = i+',';
                                     					if(feat.get('camadas').indexOf(cam) != -1){

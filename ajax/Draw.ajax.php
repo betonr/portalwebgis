@@ -151,7 +151,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $date = date("Y/m/d");
                     $mapname = $PostData['map'];
                     $camadasSelect='';
-                    for($z=1;$z<8;$z++){
+                    for($z=1870;$z<=1930;$z+=10){
                         if(isset($PostData[$z])){
                             $camadasSelect .= $z.', ';
                         }

@@ -328,12 +328,33 @@ nav ul li a:hover{ color: #333; }
 
 .mapedit img{
     position: absolute;
-    bottom: 20px; right: 20px;
+    bottom: 33px; right: 18px;
     z-index: 1;
 }
 
 /* ------ botões de ações (lado esquerdo) ----- */
-.mapedit .functionsType{
+.mapedit .search_btn{
+    position: absolute;
+    width: 2.54em;
+    bottom: 400px;
+    left:7.5px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 3px;
+    padding: 3px;
+    z-index: 2;
+}
+.mapedit .search_btn .btn{
+    position: relative;
+    display: block;
+    background:rgba(0,60,136,.5);
+    cursor: pointer;
+    padding: 6px 2px;
+    font-size: 1.5em;
+    border-radius: 2px;
+    color: #FFF;
+}
+
+.mapedit .typeGeom_btn{
     position: absolute;
     width: 2.54em;
     bottom:250px;
@@ -343,7 +364,7 @@ nav ul li a:hover{ color: #333; }
     padding: 0px 3px 2px 3px;
     z-index: 2;
 }
-.mapedit .functionsType .btn{
+.mapedit .typeGeom_btn .btn{
     position: relative;
     display: block;
     background:rgba(0,60,136,.5);
@@ -354,6 +375,7 @@ nav ul li a:hover{ color: #333; }
     border-radius: 2px;
     color: #FFF;
 }
+
 .mapedit .recarregamento{
     position: absolute;
     width: 2.54em;
@@ -375,7 +397,7 @@ nav ul li a:hover{ color: #333; }
     border-radius: 2px;
     color: #FFF;
 }
-.mapedit .functionsType .btn:hover, .functionsType .btn.active, .recarregamento .btn:hover{
+.mapedit .search_btn .btn:hover, .search_btn .btn.active, .typeGeom_btn .btn:hover, .typeGeom_btn .btn.active, .recarregamento .btn:hover{
     background: rgba(0,60,136,.7);
 }
 
@@ -407,7 +429,6 @@ nav ul li a:hover{ color: #333; }
 /* ----------- points ---------- */
 .mapedit .toobar form{
     display: inline-block;
-    float: left;
     margin-right: 30px;
 }
 .mapedit .toobar form input{
@@ -427,7 +448,6 @@ nav ul li a:hover{ color: #333; }
     background: #666;
 }
 
-
 .mapedit a.btnbackMap{
     position: absolute;
     z-index: 3;
@@ -438,6 +458,59 @@ nav ul li a:hover{ color: #333; }
 }
 .mapedit a.btnbackMap:hover{
     color: #333;
+}
+
+/* ------------- toobar para pesquisa de endereço (search) -----------*/
+.searchEnd{
+    position: absolute;
+    width: 30%;
+    top: 15%;
+    left: 3%;
+    background: rgba(255,255,255,0.7);
+    padding: 10px 10px;
+    z-index: 4;
+    display: none;
+}
+.searchEnd h1{
+    color: #333;
+    text-shadow: 1px 1px 1px #666;
+    border-bottom: 1px solid #333;
+    padding: 0 0 5px 15px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+.searchEnd input[name='searchInput']{
+    width: 94%;
+    margin: 15px 0 15px 3%;
+    padding: 7px 7px 7px 35px;
+    background-image: url(../images/search.png) no-repeat;
+}
+.searchEnd .years{
+    border-radius:8px;
+    background: #dedede;
+    padding: 5px;
+    border:none;
+    text-align: center;
+}
+.searchEnd .search_load{
+    float: left;
+    position: absolute;
+    top: 25px;
+    right: 5%;
+}
+.searchEnd .searchResposta{
+    width: 94%;
+    background: rgba(0,0,0,0.02);
+    border: 1px solid #ccc;
+    margin: 0px 0 15px 3%;
+}
+.searchEnd .searchResposta p{
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+.searchEnd .searchResposta button{
+    padding: 0 3px;
+    float: right;
 }
 
 /* ---------- formulario para inserção de dados ---------- */

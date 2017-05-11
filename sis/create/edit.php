@@ -7,8 +7,8 @@ endif;
 
 <nav>
     <ul>
-        <li><a href="dashboard.php?p=create/create" title="create map in Pauliceia">Create</a></li>
-        <li><a href="dashboard.php?p=create/edit" title="edit map in Pauliceia" style="color: #333;">Edit</a></li>
+        <li><a href="dashboard.php?p=create/create" title="create map in  ">Create</a></li>
+        <li><a href="dashboard.php?p=create/edit" title="edit map in  " style="color: #333;">Edit</a></li>
     </ul>
 </nav>
 

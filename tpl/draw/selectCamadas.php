@@ -1,12 +1,12 @@
 <article class="selectCamadas">
 
-    <input type="checkbox" name="mapAtual" value="1" checked>1930</a>
-    <input type="checkbox" name="mapAtual" value="2" checked>1920</a>
-    <input type="checkbox" name="mapAtual" value="3" checked>1910</a>
-    <input type="checkbox" name="mapAtual" value="4" checked>1900</a><br>
-    <input type="checkbox" name="mapAtual" value="5" checked>1890</a>
-    <input type="checkbox" name="mapAtual" value="6" checked>1880</a>
-    <input type="checkbox" name="mapAtual" value="7" checked>1868</a>
+    <input type="checkbox" name="mapAtual" value="1930" checked>1930</a>
+    <input type="checkbox" name="mapAtual" value="1920" checked>1920</a>
+    <input type="checkbox" name="mapAtual" value="1910" checked>1910</a>
+    <input type="checkbox" name="mapAtual" value="1900" checked>1900</a><br>
+    <input type="checkbox" name="mapAtual" value="1890" checked>1890</a>
+    <input type="checkbox" name="mapAtual" value="1880" checked>1880</a>
+    <input type="checkbox" name="mapAtual" value="1868" checked>1868</a>
     <a  class="todasCamadas">TODAS</a>
 
     <center>

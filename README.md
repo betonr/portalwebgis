@@ -13,8 +13,8 @@ Suas funcionalidades são:
  - Inserir, editar e deletar conteúdos dos mapas gráficamente;
  - Visualizar mapas publicados no GEOSERVER;
 
-=================================================================================
-=================================================================================
+=============================================================================================
+
  # Instalação do portal em uma máquina local
 
 
@@ -23,30 +23,40 @@ Pré-requisitos, ter os seguintes softwares instalados:
  - GeoServer
  - postgresql, com extensão POSTGIS habilitada
  - apache
- - php 5.6
+ - php 5.6 (com as extensões CURL, OPENSSL, PGSQL -> ATIVAS*)
+        * para ativar extensões no php, é necessário ir no seu diretório de instalação, acessar o arquivo php.ini e retirar o ";" de cada extensão que deseja.
 
 
 Passo-a-Passo INSTALAÇÃO:
 
- 1° -> fazer o download do GEOSERVER e dos mapas default no link( link )
+ 1° -> fazer o download dos arquivos shapifiles(mapas) default no link( https://drive.google.com/open?id=0B_HLDpnyXInqSk54X1pEbVNWclU )
 
  2° -> extrair os arquivos em uma pasta do seu computador
 
- 3° -> copiar os arquivos da pasta geoserver_tpl e colar dentro da pasta de workspace do seu geoserver, geralmente em: geoserver/data_dir/workspace/
+ 3° -> abrir o Geoserver e criar um workspace com o nome 'portalweb'
 
- 4° -> copiar os arquivos da pasta dados_geo e colar dentro da pasta 'documents' em seu sistema operacional
+ 4° -> criar duas datastore(tipo=shapifile), chamadas de distritos e municipios, no workspace criado acima.
+      * buscar essas esses arquivos .shp no diretório extrído no passo 2
+      * publicar as camadas na projeção : 4326. 
 
- 5° -> fazer um clone do projeto, dentro do seu servidor local(apache), geralmente em: c:var/www/html/
+ 5° -> criar uma datastote(tipo=postgis), chamada "Postgis", com o dados do servidor do seu BD 
 
- 6° -> criar um banco de dados ESPACIAL (com extensão postgis ativada) chamado 'db_pauliceia', no postgresql
+ 6° -> fazer um clone do projeto, dentro do seu servidor local(apache), geralmente em: c:var/www/html/
 
- 7° -> importar as tabelas ( https://drive.google.com/open?id=0B_HLDpnyXInqZmY3dFpwb3pOSkE ) no banco de dados criado no tópico acima
+ 7° -> criar um banco de dados ESPACIAL (com extensão postgis ativada) chamado 'db_portalweb', no postgresql
 
- 8° -> executar o geoserver (geralmente na pasta: geoserver/bin/. Execute o comando sh startup.sh)
+ 8° -> importar as tabelas ( https://drive.google.com/open?id=0B_HLDpnyXInqZmY3dFpwb3pOSkE ) no banco de dados criado no tópico acima
 
- 9° -> abrir o navegador e acessar: 'localhost/portalwebgis' ou 'localhost:(porta do seu servidor)/portalwebgis'
+ 9° -> executar o geoserver (geralmente na pasta: geoserver/bin/. Execute o comando sh startup.sh)
+ 
+ 10° -> Abrir a pasta do projeto e adicionar as informações necessárias na página 'config/infobasse.php'
+
+ 11° -> abrir o navegador e acessar: 'localhost/portalwebgis' ou 'localhost:(porta do seu servidor)/portalwebgis'
+ 
     obs: o login e senha do usuário admin está abaixo, com ele é possível logar e criar os demais usuários
+    
     - login: admin@pauliceia.com.br
+    
     - senha: admin
 
 
